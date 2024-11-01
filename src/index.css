@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  
 }
 
 code {
@@ -19,6 +20,7 @@ code {
   border: solid rgb(227, 226, 226) 0.2px;
   width: 320px;
   height: 200px;
+  
 }
 
 
@@ -28,7 +30,7 @@ code {
 @media (min-width: 1280px) and (max-width: 1280px) and (min-height: 800px) and (max-height: 800px) {
   .largura {
     width: 700px !important; /* Ajuste conforme necessário */
-    border: solid rgb(0, 0, 0) 1px;
+    /* border: solid rgb(0, 0, 0) 1px; */
   }
   .right{
     margin-right: 100px;
@@ -42,7 +44,7 @@ code {
 @media (min-width: 1440px) and (max-width: 1440px) and (min-height: 900px) and (max-height: 900px) {
   .largura {
     width: 850px !important; /* Ajuste conforme necessário */
-    border: solid blue 1px;
+    /* border: solid blue 1px; */
   }
   .right{
     margin-right: 100px;
@@ -56,7 +58,7 @@ code {
 @media (min-width: 1920px) and (max-width: 1920px) and (min-height: 1200px) and (max-height: 1200px) {
   .largura {
     width: 1100px !important; /* Ajuste conforme necessário */
-    border: solid green 1px;
+    /* border: solid green 1px; */
   }
   .right{
     margin-right: 100px;
@@ -73,7 +75,7 @@ code {
 @media (min-width: 1280px) and (max-width: 1280px) and (min-height: 720px) and (max-height: 720px) {
   .largura {
     width: 700px !important; /* Ajuste conforme necessário */
-    border: solid red 1px;
+    /* border: solid red 1px; */
   }
   .right{
     margin-right: 100px;
@@ -87,7 +89,7 @@ code {
 @media (min-width: 1366px) and (max-width: 1366px) and (min-height: 768px) and (max-height: 768px) {
   .largura {
     width: 800px !important; /* Ajuste conforme necessário */
-    border: solid blue 1px;
+    /* border: solid blue 1px; */
   }.right{
     margin-right: 100px;
     }
@@ -100,7 +102,7 @@ code {
 @media (min-width: 1920px) and (max-width: 1920px) and (min-height: 1080px) and (max-height: 1080px) {
   .largura {
     width: 1000px !important; /* Ajuste conforme necessário */
-    border: solid green 1px;
+    /* border: solid green 1px; */
   }
   .right{
     margin-right: 100px;
@@ -108,4 +110,32 @@ code {
     .left{
     margin-left: 100px;
     }
+}
+
+/* imagem 1920x1200 */
+
+.form{
+  
+  
+}
+.input-field {
+  width: 36.0rem;
+  padding: 20px 20px 20px 50px;
+  font-size: 1.5rem;
+  height:3.9rem;
+  color: white;
+
+  border: none;
+  border-radius: 30px;
+  outline: none;
+  transition: background-color 0.3s;
+ 
+}
+
+.destino{
+  
+  
+  
+  border:solid 1px red;
+ 
 }

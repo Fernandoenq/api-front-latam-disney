@@ -1,88 +1,88 @@
 import React, { useState, useEffect } from 'react';
-import BASE_URL from '../config';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChair } from '@fortawesome/free-solid-svg-icons';
-//1 disponivel verde 2 - ocupado vermelho 3 - confirmado cinza (fazer uma legenda)
-//quando clicar no agendamento pedir o cpf do cliente (pois sempre tera que carregar esse id para cadastrar a no agendamento)
-//agendamento traz o endpoint http://3.133.92.17:3333/Scheduling/NotViewedSchedules
-//confirmar presença trará todos os horarios das pessoas que colocou o cpf e qunado clicar no vermleho ele ficará cinza (confirmação)
-//o dashboard vai ser uma planilha de todo mundo
+
 const Planilha = () => {
-  const [schedulingData, setSchedulingData] = useState([]);
+  // Estado para armazenar os dados recebidos do endpoint
+  const [dados, setDados] = useState([]);
 
-  // Função para buscar os dados do endpoint
-  const fetchSchedulingData = async () => {
-    try {
-      const response = await fetch(`${BASE_URL}/Scheduling/Dashboard`);
-      const data = await response.json();
-      setSchedulingData(data); // Armazena os dados do agendamento
-    } catch (error) {
-      console.error('Erro ao buscar dados de agendamento:', error);
-    }
-  };
-
+  // Função para buscar dados do endpoint
   useEffect(() => {
-    fetchSchedulingData(); // Busca os dados ao montar o componente
+    const fetchDados = async () => {
+      try {
+        const response = await fetch('http://3.133.92.17:3333/Scheduling/Dashboard');
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+  
+        // Obter como texto para análise
+        const textData = await response.text();
+        console.log("Resposta bruta:", textData);  // Verificar o conteúdo completo
+  
+        // Remover valores `NaN` ou outros que não sejam válidos
+        const cleanedData = textData.replace(/NaN/g, 'null');
+        const data = JSON.parse(cleanedData);
+  
+        setDados(data);
+      } catch (error) {
+        console.error('Erro ao buscar dados:', error);
+      }
+    };
+  
+    fetchDados();
   }, []);
+  
 
-  // Função para definir a cor do ícone baseado no status
-  const getIconColor = (status) => {
-    if (status === 2) {
-      return 'text-green-500'; // Verde se o status for 2
-    } else if (status === 3) {
-      return 'text-red-500'; // Vermelho se o status for 3
-    } else {
-      return 'text-gray-400'; // Cor padrão para outros status
+  // Função para exibir o status de agendamento com base no número
+  const getStatusLabel = (status) => {
+    switch (status) {
+      case 1:
+        return 'Disponível';
+      case 2:
+        return 'Agendado';
+      case 3:
+        return 'Confirmado';
+      default:
+        return 'Desconhecido';
     }
   };
 
   return (
-    <div className="flex flex-col items-center min-h-screen bg-gray-100 p-4">
-      <h2 className="text-2xl font-semibold mb-6">Agendamento de Cadeiras</h2>
-      <div className="flex flex-col gap-6">
-        {schedulingData.map((item, index) => {
-          // Exibe as cadeiras em pares (duplas)
-          if (index % 2 === 0) {
-            return (
-              <div key={index} className="flex justify-center gap-4 bg-white p-4 rounded-md shadow-md w-full max-w-md">
-                {/* Primeira cadeira */}
-                <div className="flex flex-col gap-2">
-                  <div className="flex justify-between items-center">
-                    <span className="text-lg">{item.TurnTime}</span>
-                    <FontAwesomeIcon
-                      icon={faChair}
-                      className={`text-3xl cursor-pointer ${getIconColor(item.SchedulingStatus)}`}
-                    />
-                  </div>
-                  <div className="flex flex-col text-left">
-                    <span>CPF: {item.Cpf}</span>
-                    <span>Nome: {item.PersonName}</span>
-                  </div>
-                </div>
-
-                {/* Segunda cadeira (se existir) */}
-                {schedulingData[index + 1] && (
-                  <div className="flex flex-col gap-2">
-                    <div className="flex justify-between items-center">
-                      <span className="text-lg">{schedulingData[index + 1].TurnTime}</span>
-                      <FontAwesomeIcon
-                        icon={faChair}
-                        className={`text-3xl cursor-pointer ${getIconColor(schedulingData[index + 1].SchedulingStatus)}`}
-                      />
-                    </div>
-                    <div className="flex flex-col text-left">
-                      <span>CPF: {schedulingData[index + 1].Cpf}</span>
-                      <span>Nome: {schedulingData[index + 1].PersonName}</span>
-                    </div>
-                  </div>
-                )}
-              </div>
-            );
-          } else {
-            return null;
-          }
-        })}
-      </div>
+    <div className="overflow-x-auto">
+      <table className="min-w-full bg-white border border-gray-300">
+        <thead>
+          <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+            <th className="py-3 px-6 text-left">TurnTime</th>
+            <th className="py-3 px-6 text-left">Cadeira</th>
+            <th className="py-3 px-6 text-left">Nome</th>
+            <th className="py-3 px-6 text-left">CPF</th>
+            <th className="py-3 px-6 text-center">Status</th>
+            <th className="py-3 px-6 text-center">Data do Agendamento</th>
+          </tr>
+        </thead>
+        <tbody className="text-gray-700 text-sm font-light">
+          {dados.map((item, index) => (
+            <tr key={index} className="border-b border-gray-300 hover:bg-gray-100">
+              <td className="py-3 px-6 text-left whitespace-nowrap">{item.TurnTime}</td>
+              <td className="py-3 px-6 text-left">{item.ChairName}</td>
+              <td className="py-3 px-6 text-left">{item.PersonName}</td>
+              <td className="py-3 px-6 text-left">{item.Cpf}</td>
+              <td className="py-3 px-6 text-center">
+                <span
+                  className={`py-1 px-3 rounded-full text-xs ${
+                    item.SchedulingStatus === 1
+                      ? 'bg-green-200 text-green-600'   // Status 1: Verde
+                      : item.SchedulingStatus === 2
+                      ? 'bg-red-200 text-red-600'       // Status 2: Vermelho
+                      : 'bg-gray-200 text-gray-600'     // Status 3: Cinza
+                  }`}
+                >
+                  {getStatusLabel(item.SchedulingStatus)}
+                </span>
+              </td>
+              <td className="py-3 px-6 text-center">{item.SchedulingDate}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };

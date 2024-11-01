@@ -119,19 +119,6 @@ const Agendar = () => {
       });
       // console.log("quinto",cpf)
       if (response.ok) {
-        // Atualiza o estado local para refletir a reserva
-        // console.log("sexto",cpf)
-      setSchedulingData(prevData =>
-        prevData.map(item => {
-          if (item.schedulingId1 === selectedSchedulingId) {
-            return { ...item, chair1: 3 }; // Atualiza a cadeira 1 para status 3
-          } else if (item.schedulingId2 === selectedSchedulingId) {
-            return { ...item, chair2: 3 }; // Atualiza a cadeira 2 para status 3
-          }
-          return item;
-        })
-      );
-      // console.log("setimo",cpf)
         setShowConfirmationModal(true); // Mostra a modal de confirmação
         fetchSchedulingData(); // Atualiza a lista após a reserva
         closeModal(); // Fechar modal após confirmar

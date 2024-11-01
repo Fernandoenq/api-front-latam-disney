@@ -18,9 +18,7 @@ import Concluir from './pages/concluir';
 // colcoar os booleand nos cadastros
 //numero no cadastro ter validacao pra enivar pro zap 
 // aumentar as coisas pra ficar bonito pro tablet, front real
-// fazer o dashboard
-//logout
-//fazer toda ação salvar o idorganizer e mostrar no dashboard
+
 
 function App() {
   return (
@@ -39,7 +37,7 @@ function App() {
             <Route path="/agendar" element={<PrivateRoute element={<Agendar />} />} />
             <Route path="/reagendamento" element={<PrivateRoute element={<Reagendamento />} />} />
             <Route path="/concluir" element={<PrivateRoute element={<Concluir />} />} />
-            
+            <Route path="/planilha" element={<PrivateRoute element={<Planilha />} />} />
           </Routes>
         </div>
       </Router>

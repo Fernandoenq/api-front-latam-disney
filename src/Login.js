@@ -1,15 +1,14 @@
-// Login.js
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './index.css';
 import BASE_URL from './config';
-import { useAuth } from './AuthContext'; // Importando o hook de autenticação
+import { useAuth } from './AuthContext';
 
 const Login = () => {
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  const { checkDailyLogin } = useAuth(); // Pegando a função do contexto
+  const { userId, checkDailyLogin } = useAuth();
 
   const [message, setMessage] = useState('');
   const [isSuccess, setIsSuccess] = useState(false);
@@ -34,16 +33,15 @@ const Login = () => {
         const organizerData = data.Organizers[0];
         const { OrganizerId, OrganizerName } = organizerData;
 
-        // Salva o OrganizerId e a data do login no localStorage
         localStorage.setItem('userId', OrganizerId);
         localStorage.setItem('userName', OrganizerName);
         localStorage.setItem('lastLoginDate', new Date().toISOString());
-
+        
         setIsSuccess(true);
         setMessage("Login bem-sucedido! Redirecionando...");
         setTimeout(() => {
-          navigate('/dashboard');
-        }, 2000);
+          window.location.reload();
+        }, 1000);
       } else if (response.status === 422) {
         setIsSuccess(false);
         const errors = data.Errors.join(', ');
@@ -59,17 +57,27 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (checkDailyLogin()) {
-      // Se o usuário já fez login hoje, redireciona para o dashboard
+    if (checkDailyLogin() || userId) {
       navigate('/dashboard');
     }
-  }, [navigate, checkDailyLogin]);
+  }, [checkDailyLogin, userId, navigate]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100 p-4">
-      <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm">
-        <img src="logoLATAM.png" alt="Logo" className="w-24 h-auto mx-auto mb-4" />
-        <h2 className="text-2xl font-semibold text-center mb-6">Login Organizador</h2>
+    <div className="flex min-h-screen items-center justify-center bg-gray-100 p-4" style={{ backgroundImage: `url('/fundologin.png')`, backgroundSize: 'cover'  }}>
+      <div className=" p-6 rounded-lg shadow-md w-full max-w-sm"  style={{ borderRadius: '15px',  marginRight:'100px' }}>
+      
+      <img 
+        src="destinos.png" 
+        alt="titulo"
+        className="mx-auto mb-8" // Removi o `transform scale-700` inexistente
+        style={{
+          transform: 'scale(7)', // Aumenta em 700%
+          transformOrigin: 'center',
+          transition: 'transform 0.3s ease-in-out'
+  }}
+/>
+
+        
         {message && (
           <div
             className={`p-4 mb-4 text-sm rounded-lg ${isSuccess ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}
@@ -78,34 +86,67 @@ const Login = () => {
             {message}
           </div>
         )}
-        <form onSubmit={handleLogin} className="space-y-4">
-          <div>
-            <input
-              type="email"
-              placeholder="Email"
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              value={login}
-              onChange={(e) => setLogin(e.target.value)}
-              required
-            />
-          </div>
-          <div>
-            <input
-              type="password"
-              placeholder="Password"
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-          <button
-            type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition-colors"
-          >
-            Entrar
-          </button>
-        </form>
+        
+          <form onSubmit={handleLogin} className="space-y-4 form">
+            <div className="relative ml-[-140px]">
+              <img 
+                src="/person.png" // Substitua pelo caminho correto do seu ícone
+                alt="Login Icon" 
+                className="absolute  left-3 top-1/2 transform -translate-y-1/2 opacity-50"
+                width="20" 
+                height="20" 
+              />
+              <input
+                type="email"
+                placeholder="login"
+                className="w-full input-field font-normal  opacity-50 shadow-x8 pl-10 pr-4 py-2 border-4 border-transparent bg-gradient-to-r  text-white "
+                value={login}
+                onChange={(e) => setLogin(e.target.value)}
+                style={{ backgroundColor: '#4682B4'}} 
+                required
+              />
+            </div>
+            
+            <div className="relative ml-[-140px]">
+              <img 
+                src="cadeado.png" // Substitua pelo caminho correto do seu ícone
+                alt="Password Icon" 
+                className="absolute left-3 top-1/2 transform -translate-y-1/2 opacity-50"
+                width="20" 
+                height="20" 
+              />
+              <input
+                type="password"
+                placeholder="senha"
+                className="w-full input-field font-normal  opacity-50 shadow-x8 pl-10 pr-4 py-2 border-4 border-transparent bg-gradient-to-r  text-white "
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                style={{ backgroundColor: '#4682B4'}}
+                required
+              />
+            </div>
+            <div className=" ml-[-140px]">
+            <button
+              type="submit"
+              className="w-full input-field bg-blue-500 text-white py-2 hover:bg-blue-600 transition-colors rounded-[20px]"
+            >
+              Entrar
+            </button>
+            </div>
+  </form>
+        {/* Imagem colocada abaixo dos inputs e botões */}
+        <div className="flex justify-center mt-8">
+          <img 
+            src="assinatura.png" 
+            alt="Assinatura"
+            className="mx-auto mb-8" // Removi o `transform scale-700` inexistente
+        style={{
+          transform: 'scale(1.4)', // Aumenta em 700%
+          transformOrigin: 'center',
+          transition: 'transform 0.3s ease-in-out'
+  }}
+          />
+        </div>
       </div>
     </div>
   );

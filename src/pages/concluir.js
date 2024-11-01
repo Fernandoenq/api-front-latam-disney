@@ -1,76 +1,84 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import BASE_URL from '../config';
+import { useNavigate, useLocation } from 'react-router-dom';
+import BASE_URL from '../config'; // Certifique-se de que o BASE_URL está definido corretamente
 import '../index.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChair } from '@fortawesome/free-solid-svg-icons';
 
-const Concluir = () => {
-  const [cpf, setCpf] = useState('');
+const Agendar = () => {
   const [schedulingData, setSchedulingData] = useState([]);
   const [isModalOpen, setModalOpen] = useState(false); // Estado para controlar a abertura da modal
   const [selectedChair, setSelectedChair] = useState(null); // Estado para armazenar a cadeira selecionada
   const [selectedSchedulingId, setSelectedSchedulingId] = useState(null); // Armazena o ID do agendamento
   const navigate = useNavigate();
-  const [selectedTurnTime, setSelectedTurnTime] = useState(''); // Estado para armazenar o horário
+  const [cpf, setCpf] = useState(''); // Estado para armazenar o CPF
+  const [personId, setPersonId] = useState(''); // Estado para armazenar o CPF
+  const [userId, setUserId] = useState('');
   const [showConfirmationModal, setShowConfirmationModal] = useState(false); // Estado para controlar a exibição da modal
+  const [selectedTurnTime, setSelectedTurnTime] = useState(''); // Estado para armazenar o horário
   const [message, setMessage] = useState(''); // Estado para a mensagem de erro ou sucesso
-  const removerMascaraCpf = (cpf) => {
-    return cpf.replace(/[^\d]+/g, ''); // Remove tudo que não é dígito
-  };
+  // console.log("segundo",cpf)
+  
+  
 
   useEffect(() => {
-    const storedCpf = localStorage.getItem('cpf');
-    if (storedCpf) {
-      const cpfLimpo = removerMascaraCpf(storedCpf); // Remove a máscara
-      setCpf(cpfLimpo);
-      fetchSchedulingData(cpfLimpo);
-      fetchPersonId(cpfLimpo);
+        // Recupera os dados do localStorage
+        const storedUserId = localStorage.getItem('userId');
+    const storedCpf = localStorage.getItem('cpf'); // Recupera o CPF do localStorage
+    const storedIDbyCPF = localStorage.getItem('personId'); // Recupera o CPF do localStorage
+
+    if (storedUserId ) {
+      setUserId(storedUserId); // Salva o OrganizerId no estado
+      console.log("esse e o id da pessoa logada", storedUserId)
     } else {
-      navigate('/dashboard');
+      // Se os dados não existirem, redireciona para a tela de login ou dashboard
+      navigate('/login');
+    }
+
+
+    if (storedCpf) {
+      setCpf(storedCpf); // Armazena o CPF no estado
+      fetchSchedulingData(storedCpf); // Busca os dados de agendamento usando o CPF
+    } else {
+      navigate('/dashboard'); // Se não houver CPF, redireciona para o dashboard
+    }
+    if (storedIDbyCPF) {
+      setPersonId(storedIDbyCPF); 
+      console.log("esse e o id da pessoa do cpf", storedIDbyCPF)
+      fetchSchedulingData(storedCpf); 
+    } else {
+      alert("nao pegou o id do cpf")
     }
   }, [navigate]);
 
-  const fetchSchedulingData = async (cpf) => {
+  const fetchSchedulingData = async () => {
     try {
-      const response = await fetch(`${BASE_URL}/Scheduling/SchedulingsByCpf/${cpf}`);
+      const response = await fetch(`${BASE_URL}/Scheduling/NotViewedSchedules`);
       const data = await response.json();
-      setSchedulingData(data);
+
+      // Agrupar os agendamentos pelo mesmo TurnTime
+      const groupedData = data.reduce((acc, curr) => {
+        const found = acc.find(item => item.TurnTime === curr.TurnTime);
+        if (found) {
+          found[`chair${curr.SchedulingId % 2 === 0 ? 2 : 1}`] = curr.SchedulingStatus;
+          found[`schedulingId${curr.SchedulingId % 2 === 0 ? 2 : 1}`] = curr.SchedulingId;
+        } else {
+          acc.push({
+            TurnTime: curr.TurnTime,
+            [`chair${curr.SchedulingId % 2 === 0 ? 2 : 1}`]: curr.SchedulingStatus,
+            [`schedulingId${curr.SchedulingId % 2 === 0 ? 2 : 1}`]: curr.SchedulingId,
+          });
+        }
+        return acc;
+      }, []);
+
+      setSchedulingData(groupedData);
     } catch (error) {
       console.error('Erro ao buscar dados de agendamento:', error);
     }
   };
 
-  const fetchPersonId = async (cpf) => {
-    try {
-      const response = await fetch(`${BASE_URL}/Person/PersonByCpf/${cpf}`);
-      const data = await response.json();
-      localStorage.setItem('personId', data.PersonId);
-    } catch (error) {
-      console.error('Erro ao buscar PersonId:', error);
-    }
-  };
-
-  const filteredSchedulingData = schedulingData.filter(item => item.SchedulingStatus === 2);
-
-  const handleConfirmarClick = (schedulingId, chairNumber, chairStatus, turnTime) => {
-    localStorage.setItem('schedulingId', schedulingId, turnTime); // Armazena o ID do agendamento
-    console.log("peguei o id da cadeira !!!!!!!!!",schedulingId)
-    setSelectedSchedulingId(schedulingId); // Atualiza o estado de selectedSchedulingId
-    setSelectedChair(chairNumber);
-    setSelectedTurnTime(turnTime); // Armazena o horário selecionado
-    setModalOpen(true); // Abrir modal
-    
-  };
-
-  console.log(selectedSchedulingId)
-  
-  const handleConfirmChair = async () => {
-    console.log("chegou", selectedSchedulingId);
-    const cpf = localStorage.getItem('cpf'); // Recupera o CPF de localStorage
-    if (!cpf) {
-      console.error("CPF não encontrado");
-      return;
-    }
-  
+  const handleConfirmConclusion = async () =>{
     try {
       const response = await fetch(`${BASE_URL}/Scheduling/ConfirmPresence/${selectedSchedulingId}`, {
         method: 'PUT',
@@ -86,7 +94,7 @@ const Concluir = () => {
             item.SchedulingId === selectedSchedulingId ? { ...item, SchedulingStatus: 3 } : item
           )
         );
-  
+        window.location.reload(); // Recarrega a página atual
         closeModal(); // Fechar modal após confirmar
   
         // Fecha automaticamente a modal de confirmação após 3 segundos
@@ -104,8 +112,24 @@ const Concluir = () => {
     } catch (error) {
       console.error('Erro ao reservar cadeira:', error);
     }
-  };
+
+  }
+
+  // Abrir a modal ao clicar em uma cadeira disponível
+  const handleOpenModal = (schedulingId, chairNumber, chairStatus, turnTime) => {
+    if (chairStatus === 1 || chairStatus === 3) {
+      // Se a cadeira estiver ocupada (verde ou cinza), não abre a modal
+      return;
+    }
+    // console.log("terceiro ",cpf)
+    console.log("esse e id da cadeira ",schedulingId)
+    setSelectedSchedulingId(schedulingId);
+    setSelectedChair(chairNumber);
+    setSelectedTurnTime(turnTime); // Armazena o horário selecionado
   
+    setModalOpen(true); // Abrir modal
+  };
+
   // Fechar modal
   const closeModal = () => {
     setModalOpen(false);
@@ -113,18 +137,36 @@ const Concluir = () => {
     setSelectedChair(null);
   };
 
+
+  
+
+
+  // Função para determinar a cor do botão com base no status da cadeira
+  const getChairButtonClass = (status) => {
+    switch (status) {
+      case 1:
+        return 'bg-green-500 hover:bg-green-600';
+      case 2:
+        return 'bg-red-500 hover:bg-red-600';
+      case 3:
+        return 'bg-gray-500 hover:bg-gray-600';
+      default:
+        return 'bg-blue-500 hover:bg-blue-600';
+    }
+  };
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100 p-4">
       <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm md:max-w-md lg:max-w-lg largura">
         <img src="logoLATAM.png" alt="Logo" className="w-24 h-auto mx-auto mb-4" />
-        <h2 className="text-xl font-semibold text-center mb-4">Cadeiras - CPF: {cpf}</h2>
+        <h2 className="text-xl font-semibold text-center mb-4">Confirmar Agendamento de Cadeiras</h2>
 
-            {/* Modal de confirmação */}
-            {showConfirmationModal && (
+          {/* Modal de confirmação */}
+          {showConfirmationModal && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
             <div className="bg-white p-4 rounded-md shadow-lg text-center">
               <p className="text-lg font-semibold mb-2">Cadeira reservada com sucesso!</p>
-              <p className="text-gray-500">Reserva foi concluida.</p>
+              <p className="text-gray-500">Sua reserva foi confirmada.</p>
             </div>
           </div>
         )}
@@ -133,29 +175,41 @@ const Concluir = () => {
         <table className="table-auto w-full bg-white shadow-md rounded-md">
           <thead>
             <tr className="bg-gray-200">
-              <th className="px-4 py-2">Seus horários agendados</th>
+              <th className="px-4 py-2">Horário</th>
+              <th className="px-4 py-2">Cadeira 1</th>
+              <th className="px-4 py-2">Cadeira 2</th>
             </tr>
           </thead>
           <tbody>
-            {filteredSchedulingData.length > 0 ? (
-              filteredSchedulingData.map((item) => (
-                <tr key={item.SchedulingId} className="border-b">
+            {schedulingData.length > 0 ? (
+              schedulingData.map((item, index) => (
+                <tr key={index} className="border-b">
                   <td className="px-4 py-2 text-center">
                     {new Date(item.TurnTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                   </td>
                   <td className="px-4 py-2 text-center">
                     <button
-                      className="bg-yellow-500 text-white py-1 px-2 rounded-md hover:bg-yellow-600 transition-colors"
-                      onClick={() => handleConfirmarClick(item.SchedulingId,1,item.chair1, item.TurnTime)} // Passa o horário para reagendar
+                      className={`${getChairButtonClass(item.chair1)} text-white py-2 px-4 rounded-md transition-colors`}
+                      onClick={() => handleOpenModal(item.schedulingId1, 1,item.chair1, item.TurnTime)} // Abrir modal ao clicar na cadeira 1
+                      disabled={!item.schedulingId1}
                     >
-                      Confirmar 
+                      <FontAwesomeIcon icon={faChair} /> 1
+                    </button>
+                  </td>
+                  <td className="px-4 py-2 text-center">
+                    <button
+                      className={`${getChairButtonClass(item.chair2)} text-white py-2 px-4 rounded-md transition-colors`}
+                      onClick={() => handleOpenModal(item.schedulingId2, 2,item.chair2, item.TurnTime)} // Abrir modal ao clicar na cadeira 2
+                      disabled={!item.schedulingId2}
+                    >
+                      <FontAwesomeIcon icon={faChair} /> 2
                     </button>
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="2" className="text-center px-4 py-2 text-gray-500">Nenhuma cadeira disponível.</td>
+                <td colSpan="3" className="text-center px-4 py-2 text-gray-500">Nenhuma cadeira disponível.</td>
               </tr>
             )}
           </tbody>
@@ -168,18 +222,16 @@ const Concluir = () => {
           >
             Voltar
           </button>
-        
         </div>
       </div>
 
-      
-          {/* Modal de confirmação */}
-          {isModalOpen && (
+      {/* Modal de confirmação */}
+      {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm">
             <h2 className="text-xl font-semibold text-center mb-4">Confirmar Agendamento</h2>
             <p className="text-center mb-4">
-              Tem certeza que deseja confirmar com o agendamento <strong>{selectedChair}</strong> do horário <strong>{new Date(selectedTurnTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</strong>?
+              Tem certeza que deseja confirmar o horário da cadeira <strong>{selectedChair}</strong> do horário <strong>{new Date(selectedTurnTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</strong>?
             </p>
             {/* Flex para os botões */}
             <div className="flex justify-between space-x-4">
@@ -191,7 +243,7 @@ const Concluir = () => {
               </button>
               <button
                 className="w-1/2 bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition-colors"
-                onClick={handleConfirmChair}
+                onClick={handleConfirmConclusion}
               >
                 Confirmar
               </button>
@@ -203,4 +255,4 @@ const Concluir = () => {
   );
 };
 
-export default Concluir;
+export default Agendar;

@@ -104,7 +104,7 @@ const Reagendamento = () => {
   };
 
   const handleOpenModal = (schedulingId, chairNumber, chairStatus, turnTime) => {
-    if (chairStatus === 2) {
+    if (chairStatus === 2 || chairStatus === 3) {
       return;
     }
     setSelectedSchedulingId(schedulingId);
