@@ -6,17 +6,15 @@ import '../index.css';
 const Agendamento = () => {
   const [cpf, setCpf] = useState('');
   const [schedulingData, setSchedulingData] = useState([]);
- 
+  const [selectedSchedulingId, setSelectedSchedulingId] = useState(null); // Estado para armazenar o horário selecionado
   const navigate = useNavigate();
 
-  const removerMascaraCpf = (cpf) => {
-    return cpf.replace(/[^\d]+/g, ''); // Remove tudo que não é dígito
-  };
+  const removerMascaraCpf = (cpf) => cpf.replace(/[^\d]+/g, '');
 
   useEffect(() => {
     const storedCpf = localStorage.getItem('cpf');
     if (storedCpf) {
-      const cpfLimpo = removerMascaraCpf(storedCpf); // Remove a máscara
+      const cpfLimpo = removerMascaraCpf(storedCpf);
       setCpf(cpfLimpo);
       fetchSchedulingData(cpfLimpo);
       fetchPersonId(cpfLimpo);
@@ -29,7 +27,6 @@ const Agendamento = () => {
     try {
       const response = await fetch(`${BASE_URL}/Scheduling/SchedulingsByCpf/${cpf}`);
       const data = await response.json();
-      console.log('Dados de agendamento:', data); 
       setSchedulingData(data);
     } catch (error) {
       console.error('Erro ao buscar dados de agendamento:', error);
@@ -54,68 +51,104 @@ const Agendamento = () => {
     navigate('/agendar');
   };
 
-  const handleReagendarClick = (schedulingId) => {
-    localStorage.setItem('schedulingId', schedulingId); // Armazena o ID do agendamento
-    console.log(schedulingId)
-    
-    navigate('/reagendamento'); // Navega para a tela de confirmação de reagendamento
+  const handleReagendarClick = () => {
+    if (selectedSchedulingId) {
+      localStorage.setItem('schedulingId', selectedSchedulingId);
+      navigate('/reagendamento');
+    }
+  };
+
+  const handleSelectScheduling = (schedulingId) => {
+    setSelectedSchedulingId(schedulingId);
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100 p-4">
-      <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm md:max-w-md lg:max-w-lg largura">
-        <img src="logoLATAM.png" alt="Logo" className="w-24 h-auto mx-auto mb-4" />
-        <h2 className="text-xl font-semibold text-center mb-4">Agendamento de Cadeiras - CPF: {cpf}</h2>
+    <div className="flex flex-col min-h-screen items-center justify-center"
+      style={{ backgroundImage: `url('/fundomenu.png')`, backgroundSize: 'cover' }}>
 
-        {/* Tabela de agendamentos */}
-        <table className="table-auto w-full bg-white shadow-md rounded-md">
-          <thead>
-            <tr className="bg-gray-200">
-              <th className="px-4 py-2">Seus horários agendados</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredSchedulingData.length > 0 ? (
-              filteredSchedulingData.map((item) => (
-                <tr key={item.SchedulingId} className="border-b">
-                  <td className="px-4 py-2 text-center">
-                    {new Date(item.TurnTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                  </td>
-                  <td className="px-4 py-2 text-center">
-                    <button
-                      className="bg-yellow-500 text-white py-1 px-2 rounded-md hover:bg-yellow-600 transition-colors"
-                      onClick={() => handleReagendarClick(item.SchedulingId)} // Passa o horário para reagendar
-                    >
-                      Reagendar
-                    </button>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="2" className="text-center px-4 py-2 text-gray-500">Nenhuma cadeira disponível.</td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+      <div className="img"
+        style={{
+          height: '38vh',
+          width: '90vw',
+          backgroundImage: 'url(destinos.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      />
 
-        <div className="mt-4 flex justify-between">
-          <button
-            className="bg-gray-300 text-black py-2 px-4 rounded-md hover:bg-gray-400 transition-colors"
-            onClick={() => navigate('/dashboard')}
-          >
-            Voltar
-          </button>
-          <div className="flex space-x-2">
-            <button
-              className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors"
-              onClick={() => handleNovoClick()}
+<div
+  className="p-6 rounded-lg shadow-md w-full max-w-sm md:max-w-md lg:max-w-lg largura"
+  style={{ backgroundColor: '#1861af' }}
+>
+  <p className="px-4 py-2 text-center text-white text-lg font-semibold">Agendamento de Cadeiras - CPF: {cpf}</p>
+
+  <div style={{ maxHeight: '220px', overflowY: 'auto' }}>
+    <table className="table-auto w-full shadow-md text-white rounded-md" style={{ backgroundColor: '#1861af' }}>
+      <thead>
+        <tr className="bg-gray-200" style={{ backgroundColor: '#1861af' }}>
+          <th className="px-4 py-2">Seus horários</th>
+        </tr>
+      </thead>
+      <tbody>
+        {filteredSchedulingData.length > 0 ? (
+          filteredSchedulingData.map((item) => (
+            <tr
+              key={item.SchedulingId}
+              className={`border-b border-dotted ${selectedSchedulingId === item.SchedulingId ? 'bg-blue-900' : ''}`}
+              onClick={() => handleSelectScheduling(item.SchedulingId)}
+              style={{ cursor: 'pointer' }}
             >
-              Novo Agendamento
-            </button>
-          </div>
-        </div>
+              <td className="px-4 py-2 text-center text-5xl font-bold text-white">
+                {new Date(item.TurnTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+              </td>
+            </tr>
+          ))
+        ) : (
+          <tr>
+            <td colSpan="2" className="text-center px-4 py-2 text-gray-500">Nenhuma cadeira disponível.</td>
+          </tr>
+        )}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+      <div className="mt-4  flex justify-between w-full max-w-md">
+        <button
+          className="text-white voltar  py-2 px-4 rounded-md hover:bg-gray-400 transition-colors"
+          onClick={() => navigate('/dashboard')}
+        >
+          Voltar
+        </button>
+
+        <button
+          className="bg-blue-500 agendar text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors"
+          onClick={handleReagendarClick}
+          disabled={!selectedSchedulingId} // Desativa o botão se nenhum horário estiver selecionado
+        >
+          Reagendar
+        </button>
+
+        <button
+          className="bg-blue-500 cadastrar text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors"
+          onClick={handleNovoClick}
+        >
+          Novo Agendamento
+        </button>
       </div>
+
+      <div
+        className="flex justify-center assinatura-dashboard"
+        style={{
+          height: '20vh',
+          width: '20vw',
+          backgroundImage: 'url(assinatura.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      />
     </div>
   );
 };

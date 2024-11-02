@@ -6,6 +6,12 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   
+ 
+    width: 100%;
+    max-width: 1920px; /* Defina um valor máximo adequado */
+    margin: 0 auto; /* Centraliza o container */
+    padding: 0 00px; /* Adiciona espaçamento interno */
+  
 }
 
 code {
@@ -113,29 +119,113 @@ code {
 }
 
 /* imagem 1920x1200 */
-
-.form{
-  
-  
+/* CSS para estilizar o placeholder */
+input::placeholder {
+  color: white; /* Cor do placeholder */
+  opacity: 2;   /* Garantir que o placeholder não fique transparente */
 }
-.input-field {
-  width: 36.0rem;
-  padding: 20px 20px 20px 50px;
-  font-size: 1.5rem;
-  height:3.9rem;
-  color: white;
+.assinatura{
+  transform: translateY(9.1rem);
+}
+.assinatura-confirma{
+  transform: translateY(4.1rem);
+}
 
-  border: none;
-  border-radius: 30px;
-  outline: none;
-  transition: background-color 0.3s;
+/* Estilo padrão para telas maiores */
+.input-container {
+  width: 600px;
+}
+
+.responsive-width {
+  width: 600px; /* Largura para telas maiores */
+}
+
+@media (max-width: 640px) {
+  .responsive-width {
+    width: 100%; /* Ajusta para 100% em telas pequenas */
+  }
+  .assinatura{
+    transform: translateY(3.0rem);
+    height: '10vh';
+    width: '60vw';  
+  }
+  .card-dashboard{
+    width: 300px;
+  
+   
+  }
+}
+@media (max-width: 1280px) {
+  .responsive-width {
+    width: 100%; /* Ajusta para 100% em telas pequenas */
+  }
+  .assinatura{
+    transform: translateY(5.1rem);
+  }
+  .card-dashboard{
+    width: 220px;
+    height: 100px;
+   
+  }
+}
+
+.card-dashboard{
+  border: 0.5px solid rgba(0, 0, 0, 0.2); /* Cinza mais suave */
+border-radius:9.5%;
+
+}
+
+.assinatura-dashboard{
  
 }
 
-.destino{
-  
-  
-  
-  border:solid 1px red;
- 
+/* Estilização para transformar checkbox em bolinha */
+.custom-radio {
+  appearance: none; /* Remove o estilo padrão */
+  background-color: #000080; /* Fundo branco para o estado desmarcado */
+  border: 2px solid #000080; /* Cor azul-marinho para a borda */
+  border-radius: 50%; /* Forma circular */
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.custom-radio:checked {
+  background-color: yellow; /* Fundo azul-marinho para o estado marcado */
+  border-color: #000080; /* Bordas azul-marinho quando selecionado */
+}
+
+/* botoes cadastro */
+.cadastrar{
+  background-color: #B22222;
+}
+.voltar{
+  background-color:#191970;
+}
+.agendar{
+  background-color:#00BFFF;
+}
+
+
+/* Estilo da barra de rolagem */
+::-webkit-scrollbar {
+  width: 5px; /* Largura da barra de rolagem */
+  background-color: #4682B4; /* Fundo da barra de rolagem */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #CD5C5C; /* Cor da barra de rolagem */
+  border-radius: 10px; /* Borda arredondada na barra de rolagem */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #CD5C5C; /* Cor da barra de rolagem ao passar o mouse */
+}
+
+::-webkit-scrollbar-track {
+  background: #4682B4; /* Cor do fundo da trilha da barra de rolagem */
 }

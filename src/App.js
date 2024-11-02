@@ -17,7 +17,6 @@ import Concluir from './pages/concluir';
 
 // colcoar os booleand nos cadastros
 //numero no cadastro ter validacao pra enivar pro zap 
-// aumentar as coisas pra ficar bonito pro tablet, front real
 
 
 function App() {

@@ -63,21 +63,33 @@ const Login = () => {
   }, [checkDailyLogin, userId, navigate]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100 p-4" style={{ backgroundImage: `url('/fundologin.png')`, backgroundSize: 'cover'  }}>
-      <div className=" p-6 rounded-lg shadow-md w-full max-w-sm"  style={{ borderRadius: '15px',  marginRight:'100px' }}>
-      
-      <img 
-        src="destinos.png" 
-        alt="titulo"
-        className="mx-auto mb-8" // Removi o `transform scale-700` inexistente
-        style={{
-          transform: 'scale(7)', // Aumenta em 700%
-          transformOrigin: 'center',
-          transition: 'transform 0.3s ease-in-out'
-  }}
-/>
+    <div className="flex min-h-screen items-center justify-center bg-gray-100 p-1" style={{ backgroundImage: `url('/fundologin.png')`,backgroundSize: 'cover', paddingTop:'90px' }}>
+      <div className=" rounded-lg shadow-md " 
+      style={{ 
+        height: 'auto', 
+        width: '90%', 
+        maxWidth: '800px', 
+        display: 'flex', 
+        flexDirection: 'column', 
+        alignItems: 'center', 
+        justifyContent: 'center' ,
+        //  border:'solid purple 1px'
+      }}>
 
-        
+
+        <div
+          className="img"
+          style={{
+            height: '30vh', 
+            width: '90vw',  
+            backgroundImage: 'url(destinos.png)',
+            backgroundSize: 'cover', 
+            backgroundPosition: 'center', 
+            //  border:'solid yellow 1px'
+          }}
+        >
+        </div>
+
         {message && (
           <div
             className={`p-4 mb-4 text-sm rounded-lg ${isSuccess ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}
@@ -87,66 +99,78 @@ const Login = () => {
           </div>
         )}
         
-          <form onSubmit={handleLogin} className="space-y-4 form">
-            <div className="relative ml-[-140px]">
-              <img 
-                src="/person.png" // Substitua pelo caminho correto do seu ícone
-                alt="Login Icon" 
-                className="absolute  left-3 top-1/2 transform -translate-y-1/2 opacity-50"
-                width="20" 
-                height="20" 
-              />
-              <input
-                type="email"
-                placeholder="login"
-                className="w-full input-field font-normal  opacity-50 shadow-x8 pl-10 pr-4 py-2 border-4 border-transparent bg-gradient-to-r  text-white "
-                value={login}
-                onChange={(e) => setLogin(e.target.value)}
-                style={{ backgroundColor: '#4682B4'}} 
-                required
-              />
-            </div>
-            
-            <div className="relative ml-[-140px]">
-              <img 
-                src="cadeado.png" // Substitua pelo caminho correto do seu ícone
-                alt="Password Icon" 
-                className="absolute left-3 top-1/2 transform -translate-y-1/2 opacity-50"
-                width="20" 
-                height="20" 
-              />
-              <input
-                type="password"
-                placeholder="senha"
-                className="w-full input-field font-normal  opacity-50 shadow-x8 pl-10 pr-4 py-2 border-4 border-transparent bg-gradient-to-r  text-white "
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                style={{ backgroundColor: '#4682B4'}}
-                required
-              />
-            </div>
-            <div className=" ml-[-140px]">
+        <form onSubmit={handleLogin} className="space-y-4 " 
+        style={{ 
+          height: 'auto',
+          width: '100%', 
+          display: 'flex', 
+          flexDirection: 'column', 
+          alignItems: 'center' , 
+          // border:'solid yellow 1px'
+        }}>
+          <div className="relative responsive-width">
+            <img
+              src="/person.png" // Substitua pelo caminho correto do seu ícone
+              alt="Login Icon"
+              className="absolute left-2 top-1/2 transform -translate-y-1/2" 
+              width="40"  
+              height="30" 
+            />
+            <input
+              type="email"
+              placeholder="Login"
+              className="w-full shadow-x8 pl-12 opacity-50 pr-4 py-2  border-transparent bg-gradient-to-r text-white focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-[20px]"
+              value={login}
+              onChange={(e) => setLogin(e.target.value)}
+              style={{ backgroundColor: '#1861af', height: '50px'}}
+              required
+            />
+          </div>
+
+          <div className="relative responsive-width">
+            <img
+              src="cadeado.png" // Substitua pelo caminho correto do seu ícone
+              alt="Password Icon"
+              className="absolute left-1 top-1/2 transform -translate-y-1/2" 
+              width="50"  
+              height="40" 
+            />
+            <input
+              type="password"
+              placeholder="Senha"
+              className="w-full shadow-x8 pl-12 opacity-50 pr-4 py-2  border-transparent bg-gradient-to-r text-white focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-[20px]"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              style={{ backgroundColor: '#1861af', height: '50px' }}
+              required
+            />
+          </div>
+          <div className="relative responsive-width">
             <button
               type="submit"
-              className="w-full input-field bg-blue-500 text-white py-2 hover:bg-blue-600 transition-colors rounded-[20px]"
+              className="w-full bg-blue-500 text-white py-2 hover:bg-blue-600 transition-colors rounded-[20px]"
+              style={{ height: '50px' }}
             >
               Entrar
             </button>
-            </div>
-  </form>
-        {/* Imagem colocada abaixo dos inputs e botões */}
-        <div className="flex justify-center mt-8">
-          <img 
-            src="assinatura.png" 
-            alt="Assinatura"
-            className="mx-auto mb-8" // Removi o `transform scale-700` inexistente
-        style={{
-          transform: 'scale(1.4)', // Aumenta em 700%
-          transformOrigin: 'center',
-          transition: 'transform 0.3s ease-in-out'
-  }}
-          />
-        </div>
+
+
+            
+          </div>
+
+      
+        </form>
+            {/* Imagem colocada abaixo dos inputs e botões */}
+            <div className="flex justify-center " style={{
+             height: '20vh',
+             width: '20vw', 
+            backgroundImage: 'url(assinatura.png)',
+            backgroundSize: 'cover', 
+            backgroundPosition: 'center', 
+            //  border:'solid yellow 1px',
+             marginTop:'10vh'
+          }}>
+          </div>
       </div>
     </div>
   );

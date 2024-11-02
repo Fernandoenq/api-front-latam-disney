@@ -1,73 +1,134 @@
-import React from "react";
+import React, { useState } from "react";
 import "../index.css"; // Certifique-se de que o Tailwind CSS está sendo importado corretamente
 import { useNavigate } from 'react-router-dom';
+import { FaChevronDown } from "react-icons/fa";
 const Dashboard = () => {
-const navigate = useNavigate();
+  const navigate = useNavigate();
+  const userId = localStorage.getItem('userId');
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  if (!userId) {
+    navigate('/');
+  }
 
-//verificando se o usuario ja esta logado colocar no aurthcontext e passar na rota no app? 
-const userId = localStorage.getItem('userId');
-if (userId) {
-  // Agora você pode usar o ID do usuário em qualquer ação
-  console.log(`Ação sendo executada com o ID do usuário DASHBOARD: ${userId}`);
-} else {
-  // Se o usuário não está logado, redireciona para a página de login
-  navigate('/');
-}
-
-const logout = () => {
-  localStorage.clear();  // Remove todos os itens do localStorage
-
-  // Recarrega a página após a navegação para garantir que todos os dados de sessão estejam limpos
-  navigate('/');
-  window.location.reload();
-};
-const planilha = () => {
+  const logout = () => {
+    localStorage.clear();
+    navigate('/');
+    window.location.reload();
+  };
   
+  const planilha = () => {
+    navigate('/planilha');
+  };
 
-  
-  navigate('/planilha');
- 
-};
+  const handleCadastroClick = () => {
+    navigate('/cadastro');
+  };
 
-const handleCadastroClick = () => {
-        navigate('/cadastro'); // Redireciona para a rota de cadastro
-};
+  const handleConfirmCPFClick = () => {
+    navigate('/confirmacpf');
+  };
 
+  const handleConfirmarClick = () => {
+    navigate('/confirmacao');
+  };
 
-const handleConfirmCPFClick = () => {
-  navigate('/confirmacpf'); // Redireciona para a rota de cadastro
-};
-const handleConfirmarClick = () => {
-    navigate('/concluir'); // Redireciona para a rota de cadastro
-};
-
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
 
   return (
-    <div className="flex flex-col min-h-screen items-center " style={{ backgroundImage: `url('/fundomenu.png')` }}>
-    
+    <div 
+      className="flex flex-col min-h-screen items-center justify-center" 
+      style={{ backgroundImage: `url('/fundomenu.png')`, backgroundSize: 'cover' }}
+    >
+      {/* Botão do menu suspenso no canto superior direito */}
+      <div className="absolute top-4 right-4">
+          <button 
+            onClick={toggleMenu} 
+            className="text-white p-2 rounded-full focus:outline-none"
+          >
+            <FaChevronDown size={20} />
+          </button>
+
+        {isMenuOpen && (
+          <div className="absolute right-0 mt-2 w-32 bg-white rounded-lg shadow-lg z-10">
+            <button 
+              onClick={logout} 
+              className="block w-full px-4 py-2 text-left text-gray-800 hover:bg-gray-200 rounded-t-lg"
+            >
+              Sair
+            </button>
+            <button 
+              onClick={planilha} 
+              className="block w-full px-4 py-2 text-left text-gray-800 hover:bg-gray-200 rounded-b-lg"
+            >
+              Planilha
+            </button>
+          </div>
+        )}
+      </div>
+
+      <div
+        className="img"
+        style={{
+          height: '38vh',
+          width: '90vw',
+          backgroundImage: 'url(destinos.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      />
+
       {/* Container das divs */}
-      <div className="flex flex-col sm:flex-row justify-center gap-4 w-full flex-grow items-center">
-       
-        <div onClick={handleCadastroClick} // Adiciona o evento de clique 
-        className="bg-white p-6 rounded-lg shadow-md w-full max-w-xs flex items-center justify-center mx-auto card-dashboard left">
-          <h2 className="text-lg font-semibold text-center">CADASTRO</h2>
-        </div>
-        
-       <button onClick={logout}> Logout</button>
-       <button onClick={planilha}> planilha</button>
+      <div className="card flex flex-col sm:flex-row justify-center gap-5 items-center mt-5 sm:mt-10"
+        style={{ minHeight: '300px', width: '100%', padding: '0 10px' }}
+      >
+        {/* Card de Cadastro */}
+        <div 
+          onClick={handleCadastroClick}
+          className="p-6 rounded-lg shadow-md w-full sm:max-w-xs flex flex-col items-center justify-center card-dashboard"
+          style={{ backgroundColor: '#1861af', height: '250px', maxWidth: '300px' }}
+        >
+          <img src="cadastro.png" alt="Ícone de Cadastro" className="w-50 h-50 sm:w-50 sm:h-50" />
+          <h2 className="text-base sm:text-lg text-white font-semibold text-center mb-10">CADASTRO</h2>
+        </div> 
 
-
-       
-        <div onClick={handleConfirmCPFClick} className="bg-white p-6 rounded-lg shadow-md w-full max-w-xs flex items-center justify-center mx-auto card-dashboard">
-          <h2 className="text-lg font-semibold text-center">AGENDAMENTO</h2>
+        {/* Card de Agendamento */}
+        <div 
+          onClick={handleConfirmCPFClick}
+          className="p-6 rounded-lg shadow-md w-full sm:max-w-xs flex flex-col items-center justify-center card-dashboard"
+          style={{ backgroundColor: '#1861af', height: '250px', maxWidth: '300px' }}
+        >
+          <img src="agendamento.png" alt="Ícone de Agendamento" className="w-50 h-50 sm:w-50 sm:h-50" />
+          <h2 className="text-base sm:text-lg text-white font-semibold text-center mb-10">AGENDAMENTO</h2>
         </div>
-        
-        
-        <div onClick={handleConfirmarClick} className="bg-white p-6 rounded-lg shadow-md w-full max-w-xs flex items-center justify-center mx-auto card-dashboard right">
-          <h2 className="text-lg font-semibold text-center">CONFIRMAR PRESENÇA</h2>
+
+        {/* Card de Confirmar Presença */}
+        <div 
+          onClick={handleConfirmarClick}
+          className="p-6 rounded-lg shadow-md w-full sm:max-w-xs flex flex-col items-center justify-center card-dashboard"
+          style={{ backgroundColor: '#1861af', height: '250px', maxWidth: '300px' }}
+        >
+          <img src="presenca.png" alt="Ícone de Confirmar Presença" className="w-50 h-50 sm:w-50 sm:h-50" />
+          <h2 className="text-base sm:text-lg text-white font-semibold text-center mb-10">CONFIRMAR PRESENÇA</h2>
         </div>
       </div>
+
+      {/* Imagem colocada abaixo dos inputs e botões */}
+      <div 
+        className="flex justify-center assinatura-dashboard "
+        style={{
+          height: '20vh',
+          width: '20vw',
+          backgroundImage: 'url(assinatura.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          
+        }}
+      />
+
+      
     </div>
   );
 };

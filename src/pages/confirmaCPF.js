@@ -44,43 +44,84 @@ const CPF = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100 p-4">
-      <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm md:max-w-md lg:max-w-lg largura">
-        {/* Logo */}
-        <img
-          src="logoLATAM.png"
-          alt="Logo"
-          className="w-24 h-auto mx-auto mb-4"
-        />
-        {/* Título */}
-        <h2 className="text-2xl font-semibold text-center mb-6">Forneça o CPF para o agendamento</h2>
+    <div className="flex flex-col min-h-screen items-center justify-center"
+      style={{ backgroundImage: `url('/fundomenu.png')`, backgroundSize: 'cover', 
+      // border: 'solid red 1px' 
+      }}>
+
+<div
+        className="img"
+        style={{
+          height: '38vh',
+          width: '90vw',
+          backgroundImage: 'url(destinos.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      />
+      <div className="p-6 rounded-lg shadow-md w-full max-w-sm md:max-w-md lg:max-w-lg largura"
+        style={{ 
+          // border: 'solid red 1px' 
+          }}>
+
+  
+
         {/* Formulário que pega o CPF */}
-        <form onSubmit={verificaCpf} className="space-y-4">
+        <form onSubmit={verificaCpf} className="space-y-4" style={{ 
+          // border: 'solid red 1px' 
+          }}>
           <div>
             <input
               type="text"
               placeholder="CPF"
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full shadow-x8 pl-12 opacity-50 pr-4 py-2 border-transparent bg-gradient-to-r text-white focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-[20px]"
+              style={{ backgroundColor: '#1861af', height: '50px' }}
               value={cpf}
               onChange={handleCpfChange}
               required
             />
           </div>
-          <button
-            type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition-colors"
-          >
-            Confirmar
-          </button>
+
+          {/* Div para os botões Confirmar e Voltar */}
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-2 md:space-y-0 md:space-x-4">
+           
+
+            <button
+              type="button"
+              className="w-[170px] h-[40px] voltar text-white text-xl font-bold hover:bg-blue-600 transition-colors rounded-[20px] flex justify-center items-center"
+              style={{
+                boxShadow: '0px 10px 10px -5px rgba(0, 0, 0, 0.8)',
+                borderBottom: '3px solid black',
+              }}
+              onClick={() => navigate('/dashboard')}
+            >
+              Voltar
+            </button>
+            <button
+              type="submit"
+              className="w-[170px] h-[40px] cadastrar text-white text-xl font-bold hover:bg-blue-600 transition-colors rounded-[20px] flex justify-center items-center"
+              style={{
+                boxShadow: '0px 10px 10px -5px rgba(0, 0, 0, 0.8)',
+                borderBottom: '3px solid black',
+              }}
+            >
+              Confirmar
+            </button>
+          </div>
         </form>
 
-        <div className="mt-4 flex justify-between">
-          <button
-            className="bg-gray-300 text-black py-2 px-4 rounded-md hover:bg-gray-400 transition-colors"
-            onClick={() => navigate('/dashboard')}
-          >
-            Voltar
-          </button>
+        {/* Imagem de assinatura abaixo dos inputs e botões */}
+        <div className="flex justify-center items-center mt-4 assinatura-confirma">
+          <div
+            className="assinatura-dashboard"
+            style={{
+              height: '20vh',
+              width: '20vw',
+              backgroundImage: 'url(assinatura.png)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }}
+          />
         </div>
       </div>
 
@@ -89,7 +130,6 @@ const CPF = () => {
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm">
             <h2 className="text-xl font-semibold text-center mb-4">Esse CPF não foi cadastrado</h2>
-            {/* Flex para os botões */}
             <div className="flex justify-between space-x-4">
               <button
                 className="w-1/2 bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition-colors"
