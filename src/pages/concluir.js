@@ -114,20 +114,21 @@ const Agendar = () => {
     }
 
   }
-
-  // Abrir a modal ao clicar em uma cadeira disponível
-  const handleOpenModal = (schedulingId, chairNumber, chairStatus, turnTime) => {
+  const handleChairSelection = (schedulingId, chairNumber, chairStatus, turnTime) => {
     if (chairStatus === 1 || chairStatus === 3) {
-      // Se a cadeira estiver ocupada (verde ou cinza), não abre a modal
-      return;
+      return; // Cadeira indisponível
     }
-    // console.log("terceiro ",cpf)
-    console.log("esse e id da cadeira ",schedulingId)
     setSelectedSchedulingId(schedulingId);
     setSelectedChair(chairNumber);
-    setSelectedTurnTime(turnTime); // Armazena o horário selecionado
-  
-    setModalOpen(true); // Abrir modal
+    setSelectedTurnTime(turnTime);
+  };
+
+  const handleOpenModal = () => {
+    if (selectedChair !== null) {
+      setModalOpen(true);
+    } else {
+      alert("Selecione uma cadeira antes de confirmar.");
+    }
   };
 
   // Fechar modal
@@ -142,24 +143,50 @@ const Agendar = () => {
 
 
   // Função para determinar a cor do botão com base no status da cadeira
-  const getChairButtonClass = (status) => {
+  const getChairButtonClass = (status, schedulingId, chairNumber) => {
+    let baseClass = 'text-white py-2 px-3 rounded-md transition-colors';
+  
+    // Classe para o status da cadeira
     switch (status) {
       case 1:
-        return 'bg-green-500 hover:bg-green-600';
+        baseClass += ' bg-blue-500 hover:bg-blue-600';
+        break;
       case 2:
-        return 'bg-red-500 hover:bg-red-600';
+        baseClass += ' bg-red-500 hover:bg-red-600';
+        break;
       case 3:
-        return 'bg-gray-500 hover:bg-gray-600';
+        baseClass += ' bg-gray-500 hover:bg-gray-600';
+        break;
       default:
-        return 'bg-blue-500 hover:bg-blue-600';
+        baseClass += ' bg-blue-500 hover:bg-blue-600';
     }
+  
+    // Adiciona borda amarela para cadeira selecionada
+    if (selectedSchedulingId === schedulingId && selectedChair === chairNumber) {
+      baseClass += ' border-4 border-yellow-500';
+    }
+  
+    return baseClass;
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100 p-4">
-      <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm md:max-w-md lg:max-w-lg largura">
-        <img src="logoLATAM.png" alt="Logo" className="w-24 h-auto mx-auto mb-4" />
-        <h2 className="text-xl font-semibold text-center mb-4">Confirmar Agendamento de Cadeiras</h2>
+    <div  className="flex flex-col min-h-screen items-center justify-center"
+    style={{ backgroundImage: `url('/fundomenu.png')`, backgroundSize: 'cover' }}>
+
+<div className="img"
+        style={{
+          height: '38vh',
+          width: '90vw',
+          backgroundImage: 'url(destinos.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      />
+
+
+      <div  className="p-6 rounded-lg shadow-md w-full max-w-sm md:max-w-md lg:max-w-lg largura"
+  style={{ backgroundColor: '#1861af' }}>
+      
 
           {/* Modal de confirmação */}
           {showConfirmationModal && (
@@ -170,59 +197,58 @@ const Agendar = () => {
             </div>
           </div>
         )}
-
-        {/* Tabela de agendamentos */}
-        <table className="table-auto w-full bg-white shadow-md rounded-md">
-          <thead>
-            <tr className="bg-gray-200">
-              <th className="px-4 py-2">Horário</th>
-              <th className="px-4 py-2">Cadeira 1</th>
-              <th className="px-4 py-2">Cadeira 2</th>
-            </tr>
-          </thead>
-          <tbody>
-            {schedulingData.length > 0 ? (
-              schedulingData.map((item, index) => (
-                <tr key={index} className="border-b">
-                  <td className="px-4 py-2 text-center">
-                    {new Date(item.TurnTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                  </td>
-                  <td className="px-4 py-2 text-center">
-                    <button
-                      className={`${getChairButtonClass(item.chair1)} text-white py-2 px-4 rounded-md transition-colors`}
-                      onClick={() => handleOpenModal(item.schedulingId1, 1,item.chair1, item.TurnTime)} // Abrir modal ao clicar na cadeira 1
-                      disabled={!item.schedulingId1}
-                    >
-                      <FontAwesomeIcon icon={faChair} /> 1
-                    </button>
-                  </td>
-                  <td className="px-4 py-2 text-center">
-                    <button
-                      className={`${getChairButtonClass(item.chair2)} text-white py-2 px-4 rounded-md transition-colors`}
-                      onClick={() => handleOpenModal(item.schedulingId2, 2,item.chair2, item.TurnTime)} // Abrir modal ao clicar na cadeira 2
-                      disabled={!item.schedulingId2}
-                    >
-                      <FontAwesomeIcon icon={faChair} /> 2
-                    </button>
-                  </td>
+<p className="px-4 py-2 text-center text-white text-lg ">Concluir horários</p>
+        <div style={{ maxHeight: '220px', overflowY: 'auto' }}>
+              {/* Tabela de agendamentos */}
+              <table className="table-auto w-full shadow-md text-white rounded-md" style={{ backgroundColor: '#1861af' }}>
+          
+              <tbody>
+              {schedulingData.length > 0 ? (
+                schedulingData.map((item, index) => (
+                  <tr key={index} className="border-b border-dotted">
+                    <td className="px-4 py-2 text-center text-lg text-4xl">
+                      {new Date(item.TurnTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                    </td>
+                    <td className="px-2 py-2 text-center">
+                      <button
+                        className={getChairButtonClass(item.chair1, item.schedulingId1, 1)}
+                        onClick={() => handleChairSelection(item.schedulingId1, 1, item.chair1, item.TurnTime)}
+                        disabled={!item.schedulingId1}
+                      >
+                        <FontAwesomeIcon icon={faChair} /> <span className="text-lg">1</span>
+                      </button>
+                    </td>
+                    <td className="px-2 py-2 text-center">
+                      <button
+                        className={getChairButtonClass(item.chair2, item.schedulingId2, 2)}
+                        onClick={() => handleChairSelection(item.schedulingId2, 2, item.chair2, item.TurnTime)}
+                        disabled={!item.schedulingId2}
+                      >
+                        <FontAwesomeIcon icon={faChair} /> <span className="text-lg">2</span>
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="3" className="text-center px-4 py-2 text-gray-500">Nenhuma cadeira disponível.</td>
                 </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="3" className="text-center px-4 py-2 text-gray-500">Nenhuma cadeira disponível.</td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-
-        <div className="mt-4 flex justify-between">
-          <button
-            className="bg-gray-300 text-black py-2 px-4 rounded-md hover:bg-gray-400 transition-colors"
-            onClick={() => navigate('/dashboard')}
-          >
-            Voltar
-          </button>
+              )}
+            </tbody>
+              </table>
         </div>
+
+      
+      </div>
+
+      <div className="mt-4 flex justify-between w-full max-w-md">
+        <button className="text-white voltar py-2 px-4 rounded-md hover:bg-gray-400 transition-colors" onClick={() => navigate('/dashboard')}>
+          Voltar
+        </button>
+  
+        <button className="bg-blue-500 cadastrar text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors" onClick={handleOpenModal}>
+          Confirmar
+        </button>
       </div>
 
       {/* Modal de confirmação */}
@@ -251,7 +277,12 @@ const Agendar = () => {
           </div>
         </div>
       )}
+
+
+
     </div>
+
+    
   );
 };
 

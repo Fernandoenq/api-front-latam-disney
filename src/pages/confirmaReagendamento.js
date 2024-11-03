@@ -103,15 +103,21 @@ const Reagendamento = () => {
     }
   };
 
-  const handleOpenModal = (schedulingId, chairNumber, chairStatus, turnTime) => {
-    if (chairStatus === 2 || chairStatus === 3) {
-      return;
+  const handleChairSelection = (schedulingId, chairNumber, chairStatus, turnTime) => {
+    if (chairStatus === 2) {
+      return; // Cadeira indisponível
     }
     setSelectedSchedulingId(schedulingId);
     setSelectedChair(chairNumber);
-    setSelectedTurnTime(turnTime); // Armazena o horário selecionado
-    fetchOldSchedulingId(cpf); // Garante que o OldSchedulingId será obtido
-    setModalOpen(true);
+    setSelectedTurnTime(turnTime);
+  };
+
+  const handleOpenModal = () => {
+    if (selectedChair !== null) {
+      setModalOpen(true);
+    } else {
+      alert("Selecione uma cadeira antes de confirmar.");
+    }
   };
 
   const closeModal = () => {
@@ -157,24 +163,39 @@ const Reagendamento = () => {
     }
   };
 
-  const getChairButtonClass = (status) => {
+  const getChairButtonClass = (status, schedulingId, chairNumber) => {
+    let baseClass = 'text-white py-2 px-3 rounded-md transition-colors';
+  
+    // Classe para o status da cadeira
     switch (status) {
       case 1:
-        return 'bg-green-500 hover:bg-green-600';
+        baseClass += ' bg-blue-500 hover:bg-blue-600';
+        break;
       case 2:
-        return 'bg-red-500 hover:bg-red-600';
+        baseClass += ' bg-red-500 hover:bg-red-600';
+        break;
       case 3:
-        return 'bg-gray-500 hover:bg-gray-600';
+        baseClass += ' bg-gray-500 hover:bg-gray-600';
+        break;
       default:
-        return 'bg-blue-500 hover:bg-blue-600';
+        baseClass += ' bg-blue-500 hover:bg-blue-600';
     }
+  
+    // Adiciona borda amarela para cadeira selecionada
+    if (selectedSchedulingId === schedulingId && selectedChair === chairNumber) {
+      baseClass += ' border-4 border-yellow-500';
+    }
+  
+    return baseClass;
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100 p-4">
-      <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-lg">
-        <img src="logoLATAM.png" alt="Logo" className="w-24 h-auto mx-auto mb-4" />
-        <h2 className="text-xl font-semibold text-center mb-4">Reagendar Cadeira</h2>
+    <div className="flex flex-col min-h-screen items-center justify-center" style={{ backgroundImage: `url('/fundomenu.png')`, backgroundSize: 'cover' }}>
+      <div className="img" style={{ height: '38vh', width: '90vw', backgroundImage: 'url(destinos.png)', backgroundSize: 'cover', backgroundPosition: 'center' }} />
+
+      
+      <div className=" p-6 rounded-lg shadow-md w-full max-w-sm md:max-w-md lg:max-w-lg largura" style={{ backgroundColor: '#1861af' }}>
+      <p className="px-4 py-2 text-center text-white text-lg">Horários</p>
 
         {showConfirmationModal && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -185,82 +206,89 @@ const Reagendamento = () => {
           </div>
         )}
 
-        <table className="table-auto w-full bg-white shadow-md rounded-md">
-          <thead>
-            <tr className="bg-gray-200">
-              <th className="px-4 py-2">Horário</th>
-              <th className="px-4 py-2">Cadeira 1</th>
-              <th className="px-4 py-2">Cadeira 2</th>
-            </tr>
-          </thead>
-          <tbody>
-            {schedulingData.length > 0 ? (
-              schedulingData.map((item, index) => (
-                <tr key={index} className="border-b">
-                  <td className="px-4 py-2 text-center">
-                    {new Date(item.TurnTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                  </td>
-                  <td className="px-4 py-2 text-center">
-                    <button
-                      className={`${getChairButtonClass(item.chair1)} text-white py-2 px-4 rounded-md transition-colors`}
-                      onClick={() => handleOpenModal(item.schedulingId1, 1, item.chair1, item.TurnTime)}
-                      disabled={!item.schedulingId1}
-                    >
-                      <FontAwesomeIcon icon={faChair} /> 1
-                    </button>
-                  </td>
-                  <td className="px-4 py-2 text-center">
-                    <button
-                      className={`${getChairButtonClass(item.chair2)} text-white py-2 px-4 rounded-md transition-colors`}
-                      onClick={() => handleOpenModal(item.schedulingId2, 2, item.chair2, item.TurnTime)}
-                      disabled={!item.schedulingId2}
-                    >
-                      <FontAwesomeIcon icon={faChair} /> 2
-                    </button>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="3" className="text-center px-4 py-2 text-gray-500">Nenhuma cadeira disponível.</td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-        <div className="mt-4 flex justify-between">
-          <button
-            className="bg-gray-300 text-black py-2 px-4 rounded-md hover:bg-gray-400 transition-colors"
-            onClick={() => navigate('/agendamento')}
-          >
-            Voltar
-          </button>
-        </div>
 
-        {isModalOpen && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm">
-              <h2 className="text-xl font-semibold text-center mb-4">Confirmar Reagendamento</h2>
-              <p className="text-center mb-4">
-                Tem certeza que deseja reagendar o CPF <strong>{cpf}</strong> na cadeira <strong>{selectedChair}</strong> do horário <strong>{new Date(selectedTurnTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</strong>?
-              </p>
-              <div className="flex justify-between space-x-4">
-                <button
-                  className="w-1/2 bg-gray-300 text-black py-2 rounded-md hover:bg-gray-400 transition-colors"
-                  onClick={closeModal}
-                >
-                  Fechar
-                </button>
-                <button
-                  className="w-1/2 bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition-colors"
-                  onClick={handleConfirmReservation}
-                >
-                  Confirmar
-                </button>
-              </div>
+              <div style={{ maxHeight: '220px', overflowY: 'auto' }}>
+              <table className="table-auto w-full shadow-md text-white rounded-md" style={{ backgroundColor: '#1861af' }}>
+            <tbody>
+              {schedulingData.length > 0 ? (
+                schedulingData.map((item, index) => (
+                  <tr key={index} className="border-b border-dotted">
+                    <td className="px-4 py-2 text-center text-lg text-4xl">
+                      {new Date(item.TurnTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                    </td>
+                    <td className="px-2 py-2 text-center">
+                      <button
+                        className={getChairButtonClass(item.chair1, item.schedulingId1, 1)}
+                        onClick={() => handleChairSelection(item.schedulingId1, 1, item.chair1, item.TurnTime)}
+                        disabled={!item.schedulingId1}
+                      >
+                        <FontAwesomeIcon icon={faChair} /> <span className="text-lg">1</span>
+                      </button>
+                    </td>
+                    <td className="px-2 py-2 text-center">
+                      <button
+                        className={getChairButtonClass(item.chair2, item.schedulingId2, 2)}
+                        onClick={() => handleChairSelection(item.schedulingId2, 2, item.chair2, item.TurnTime)}
+                        disabled={!item.schedulingId2}
+                      >
+                        <FontAwesomeIcon icon={faChair} /> <span className="text-lg">2</span>
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="3" className="text-center px-4 py-2 text-gray-500">Nenhuma cadeira disponível.</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+
+          </div>       
+       
+
+          {isModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm">
+            <h2 className="text-xl font-semibold text-center mb-4">Confirmar Agendamento</h2>
+            <p className="text-center mb-4">
+              Tem certeza que deseja <strong>reagendar</strong> o CPF <strong>{cpf}</strong> na cadeira {selectedChair} das {new Date(selectedTurnTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}?
+            </p>
+            <div className="flex justify-between">
+              <button className="bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400" onClick={closeModal}>
+                Cancelar
+              </button>
+              <button className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600" onClick={handleConfirmReservation}>
+                Confirmar
+              </button>
             </div>
           </div>
-        )}
+        </div>
+      )}
+
       </div>
+
+      <div className="mt-4 flex justify-between w-full max-w-md">
+        <button className="text-white voltar py-2 px-4 rounded-md hover:bg-gray-400 transition-colors" onClick={() => navigate('/agendamento')}>
+          Voltar
+        </button>
+  
+        <button className="bg-blue-500 cadastrar text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors" onClick={handleOpenModal}>
+          Confirmar
+        </button>
+      </div>
+
+      <div
+        className="flex justify-center assinatura-dashboard"
+        style={{
+          height: '20vh',
+          width: '20vw',
+          backgroundImage: 'url(assinatura.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      />
+
     </div>
   );
 };

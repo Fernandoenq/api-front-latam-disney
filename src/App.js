@@ -15,8 +15,12 @@ import Reagendamento from './pages/confirmaReagendamento';
 import PrivateRoute from './PrivateRoute'; // Importa o PrivateRoute
 import Concluir from './pages/concluir';
 
-// colcoar os booleand nos cadastros
-//numero no cadastro ter validacao pra enivar pro zap 
+
+//numero no cadastro ter validacao pra enivar pro zap, colocar pais no endpoint
+//deixar todas as telas para celular, tablet,computador e tablet grande arrumada
+//colocar spinner nos processos 
+//tirar todos os alerts e console.log
+//arrumar dashboard
 
 
 function App() {

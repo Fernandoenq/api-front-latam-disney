@@ -80,7 +80,8 @@ const Agendamento = () => {
   className="p-6 rounded-lg shadow-md w-full max-w-sm md:max-w-md lg:max-w-lg largura"
   style={{ backgroundColor: '#1861af' }}
 >
-  <p className="px-4 py-2 text-center text-white text-lg font-semibold">Agendamento de Cadeiras - CPF: {cpf}</p>
+  <p className="px-4 py-2 text-center text-white text-lg ">Agendamento de Cadeiras - CPF: {cpf}</p>
+
 
   <div style={{ maxHeight: '220px', overflowY: 'auto' }}>
     <table className="table-auto w-full shadow-md text-white rounded-md" style={{ backgroundColor: '#1861af' }}>
