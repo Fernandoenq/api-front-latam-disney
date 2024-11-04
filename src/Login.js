@@ -69,7 +69,7 @@ const Login = () => {
   }, [checkDailyLogin, userId, navigate]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100 p-1" style={{ backgroundImage: `url('/fundologin.png')`,backgroundSize: 'cover', paddingTop:'90px' }}>
+    <div className="flex min-h-screen items-center justify-center bg-gray-100 p-1" style={{ backgroundImage: `url('/fundologin.png')`,backgroundSize: 'cover', paddingTop:'30px' }}>
       <div className="rounded-lg shadow-md " 
         style={{ 
           height: 'auto', 
@@ -119,7 +119,7 @@ const Login = () => {
             />
             
             <input
-              type="email"
+              type="name"
               placeholder="Login"
               className="w-full shadow-x8 pl-12 pr-4 py-2  text-white  rounded-[20px]"
               value={login}
@@ -174,7 +174,7 @@ const Login = () => {
           </div>
         </form>
 
-        <div className="flex justify-center tabletModelo-assinatura" style={{
+        <div className="flex justify-center tabletModelo-assinatura-login tabletModelo-assinatura" style={{
           height: '20vh',
           width: '40vh', 
           backgroundImage: 'url(assinatura.png)',

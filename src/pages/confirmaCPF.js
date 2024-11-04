@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../index.css';
+import BASE_URL from '../config';
 
 const CPF = () => {
   const [cpf, setCpf] = useState('');
@@ -21,7 +22,7 @@ const CPF = () => {
     e.preventDefault();
     try {
       // Fazendo a requisição ao endpoint
-      const response = await fetch(`http://3.133.92.17:3333/Person/PersonByCpf/${cpf.replace(/\D/g, '')}`);
+      const response = await fetch(`${BASE_URL}/Person/PersonByCpf/${cpf.replace(/\D/g, '')}`);
       const data = await response.json();
 
       if (response.ok) {
@@ -50,15 +51,20 @@ const CPF = () => {
       }}>
 
 <div
-        className="img"
-        style={{
-          height: '38vh',
-          width: '90vw',
-          backgroundImage: 'url(destinos.png)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      />
+          className="img tabletModelo-destino"
+          style={{
+            height: '28vh',
+            width: '90vw',
+            backgroundImage: 'url(destinos.png)',
+            backgroundSize: 'cover', 
+            backgroundPosition: 'center',
+            marginTop:'10px'
+            // border:'solid yellow 1px'
+          }}
+        ></div>
+
+
+
       <div className="p-6 rounded-lg shadow-md w-full max-w-sm md:max-w-md lg:max-w-lg largura"
         style={{ 
           // border: 'solid red 1px' 
@@ -74,40 +80,43 @@ const CPF = () => {
             <input
               type="text"
               placeholder="CPF"
-              className="w-full shadow-x8 pl-12 opacity-50 pr-4 py-2 border-transparent bg-gradient-to-r text-white focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-[20px]"
-              style={{ backgroundColor: '#1861af', height: '50px' }}
+              className="w-full shadow-x8 pl-12 pr-4 py-2  text-white  rounded-[20px] cadastro-input"
+              style={{ backgroundColor: 'rgba(65, 105, 225, 0.3)', // Cor de fundo com opacidade (0.6, ajustável), 
+                height: '60px',  boxShadow: '0px 10px 10px -5px rgba(0, 0, 0, 0.8)',
+                borderBottom: '3px solid black' }}
               value={cpf}
               onChange={handleCpfChange}
               required
             />
           </div>
-
-          {/* Div para os botões Confirmar e Voltar */}
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-2 md:space-y-0 md:space-x-4">
+ {/* Div para os botões Confirmar e Voltar */}
+ <div className="flex justify-between space-x-4">
            
 
-            <button
-              type="button"
-              className="w-[170px] h-[40px] voltar text-white text-xl font-bold hover:bg-blue-600 transition-colors rounded-[20px] flex justify-center items-center"
-              style={{
-                boxShadow: '0px 10px 10px -5px rgba(0, 0, 0, 0.8)',
-                borderBottom: '3px solid black',
-              }}
-              onClick={() => navigate('/dashboard')}
-            >
-              Voltar
-            </button>
-            <button
-              type="submit"
-              className="w-[170px] h-[40px] cadastrar text-white text-xl font-bold hover:bg-blue-600 transition-colors rounded-[20px] flex justify-center items-center"
-              style={{
-                boxShadow: '0px 10px 10px -5px rgba(0, 0, 0, 0.8)',
-                borderBottom: '3px solid black',
-              }}
-            >
-              Confirmar
-            </button>
-          </div>
+           <button
+             type="button"
+             className="w-[170px] h-[40px] voltar text-white text-xl font-bold hover:bg-blue-600 transition-colors rounded-[20px] flex justify-center items-center"
+             style={{
+               boxShadow: '0px 10px 10px -5px rgba(0, 0, 0, 0.8)',
+               borderBottom: '3px solid black',
+             }}
+             onClick={() => navigate('/dashboard')}
+           >
+             Voltar
+           </button>
+
+           <button
+             type="submit"
+             className="w-[170px] h-[40px] cadastrar text-white text-xl font-bold hover:bg-blue-600 transition-colors rounded-[20px] flex justify-center items-center"
+             style={{
+               boxShadow: '0px 10px 10px -5px rgba(0, 0, 0, 0.8)',
+               borderBottom: '3px solid black',
+             }}
+           >
+             Confirmar
+           </button>
+         </div>
+       
         </form>
 
         {/* Imagem de assinatura abaixo dos inputs e botões */}

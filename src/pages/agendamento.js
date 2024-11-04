@@ -63,31 +63,38 @@ const Agendamento = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen items-center justify-center"
+    <div className="flex flex-col min-h-screen items-center justify-center celular-agendar"
       style={{ backgroundImage: `url('/fundomenu.png')`, backgroundSize: 'cover' }}>
 
-      <div className="img"
-        style={{
-          height: '38vh',
-          width: '90vw',
-          backgroundImage: 'url(destinos.png)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      />
+    <div
+          className="img tabletModelo-destino"
+          style={{
+            height: '28vh',
+            width: '90vw',
+            backgroundImage: 'url(destinos.png)',
+            backgroundSize: 'cover', 
+            backgroundPosition: 'center',
+            marginTop:'10px'
+            // border:'solid yellow 1px'
+          }}
+        ></div>
 
 <div
-  className="p-6 rounded-lg shadow-md w-full max-w-sm md:max-w-md lg:max-w-lg largura"
-  style={{ backgroundColor: '#1861af' }}
+ className="p-6 rounded-lg shadow-md w-full sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-3/5 largura horarios-agendar" 
+ style={{ 
+   backgroundColor: 'rgba(65, 105, 225, 0.2)',
+   boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.8)',
+   border: '0.4px solid black',
+ }}
 >
   <p className="px-4 py-2 text-center text-white text-lg ">Agendamento de Cadeiras - CPF: {cpf}</p>
 
 
-  <div style={{ maxHeight: '220px', overflowY: 'auto' }}>
-    <table className="table-auto w-full shadow-md text-white rounded-md" style={{ backgroundColor: '#1861af' }}>
+  <div style={{ maxHeight: '220px', overflowY: 'auto' }} className="horarios">
+    <table className="table-auto w-full shadow-md text-white rounded-md text-sm md:text-lg" style={{ overflowX: 'auto' }}>
       <thead>
-        <tr className="bg-gray-200" style={{ backgroundColor: '#1861af' }}>
-          <th className="px-4 py-2">Seus horários</th>
+        <tr >
+          <th className="px-4 py-2 aumentando-horarios">Seus horários</th>
         </tr>
       </thead>
       <tbody>
@@ -99,7 +106,7 @@ const Agendamento = () => {
               onClick={() => handleSelectScheduling(item.SchedulingId)}
               style={{ cursor: 'pointer' }}
             >
-              <td className="px-4 py-2 text-center text-5xl font-bold text-white">
+              <td className="px-2 py-1 text-center  md:text-6xl horarios-cadeiras">
                 {new Date(item.TurnTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
               </td>
             </tr>
@@ -116,40 +123,64 @@ const Agendamento = () => {
 
 
 
-      <div className="mt-4  flex justify-between w-full max-w-md">
-        <button
-          className="text-white voltar  py-2 px-4 rounded-md hover:bg-gray-400 transition-colors"
-          onClick={() => navigate('/dashboard')}
-        >
-          Voltar
-        </button>
+<div className="mt-4 flex flex-wrap justify-between w-full btn-large-buttons celular-agendar"  style={{
+           width:'400px',
+            // border:'solid yellow 1px'
+          }}>
+  <button
+    className="text-white font-bold voltar py-2 px-4 rounded-[20px]  transition-colors w-full sm:w-auto sm:mr-2 mb-2 btn-large" // Adiciona classe customizada
+    style={{
+      boxShadow: '0px 10px 10px -5px rgba(0, 0, 0, 0.8)',
+      borderBottom: '3px solid black',
+    }}
+    onClick={() => navigate('/dashboard')}
+  >
+    Voltar
+  </button>
 
-        <button
-          className="bg-blue-500 agendar text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors"
-          onClick={handleReagendarClick}
-          disabled={!selectedSchedulingId} // Desativa o botão se nenhum horário estiver selecionado
-        >
-          Reagendar
-        </button>
+  <button
+    className=" font-bold agendar text-white py-2 px-4  rounded-[20px] transition-colors w-full sm:w-auto sm:mr-2 mb-2 btn-large" // Adiciona classe customizada
+    style={{
+      boxShadow: '0px 10px 10px -5px rgba(0, 0, 0, 0.8)',
+      borderBottom: '3px solid black',
+    }}
+    onClick={handleReagendarClick}
+    disabled={!selectedSchedulingId}
+  >
+    Reagendar
+  </button>
 
-        <button
-          className="bg-blue-500 cadastrar text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors"
-          onClick={handleNovoClick}
-        >
-          Novo Agendamento
-        </button>
-      </div>
+  <button
+    className=" cadastrar font-bold text-white py-2 px-4 rounded-[20px]  transition-colors w-full sm:w-auto btn-large-novo" // Adiciona classe customizada
+    style={{
+      boxShadow: '0px 10px 10px -5px rgba(0, 0, 0, 0.8)',
+      borderBottom: '3px solid black',
+    }}
+    onClick={handleNovoClick}
+  >
+    Novo Agendamento
+  </button>
+</div>
 
-      <div
-        className="flex justify-center assinatura-dashboard"
-        style={{
-          height: '20vh',
-          width: '20vw',
-          backgroundImage: 'url(assinatura.png)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      />
+
+
+
+       {/* Imagem colocada abaixo dos inputs e botões */}
+  <div className="flex justify-center items-center"> {/* Container flex para centralizar */}
+            <div
+              className=" tabletModelo-assinatura "
+              style={{
+                height: '20vh',
+                width: '20vw',
+                backgroundImage: 'url(assinatura.png)',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                marginTop:'10px'
+              }}
+            />
+          </div>
+
+
     </div>
   );
 };

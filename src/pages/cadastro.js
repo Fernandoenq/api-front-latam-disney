@@ -1,6 +1,8 @@
 import React, { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Select from 'react-select';
+import InputMask from 'react-input-mask';
+import BASE_URL from '../config';
 import '../index.css';
 
 const Cadastro = () => {
@@ -17,7 +19,10 @@ const Cadastro = () => {
   const [isSuccess, setIsSuccess] = useState(false); // Para saber se foi sucesso ou erro
   const [aceiteTermoLGPD, setAceiteTermoLGPD] = useState(false);
   const [aceiteOfertas, setAceiteOfertas] = useState(false);
+  const [error, setError] = useState('');
   const navigate = useNavigate();
+  const options = { timeZone: 'America/Sao_Paulo', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+  const dateInSaoPaulo = new Intl.DateTimeFormat('pt-BR', options).format(new Date());
 
 
   const countries = [
@@ -258,9 +263,12 @@ const Cadastro = () => {
   
   
   
-  const [selectedCountry, setSelectedCountry] = useState(countries[0]); // Inicializa com Brasil
+  const [selectedCountry, setSelectedCountry] = useState(countries[30]); // Inicializa com Brasil
+  
   const handleChange = (selectedOption) => {
     setSelectedCountry(selectedOption);
+    setCelular(''); // Limpa o campo de celular ao mudar de país
+    setError(''); // Limpa o erro ao mudar de país
   };
 
   const customStyles = {
@@ -300,27 +308,51 @@ const Cadastro = () => {
     return cpfDigits.length === 11; // Verifica se tem 11 dígitos
   };
 
+  const validatePhoneNumber = (value) => {
+    // Validação para o Brasil
+    const brasilPhonePattern = /^\(\d{2}\) \d{5}-\d{4}$/; // Formato: (99) 99999-9999
+    if (selectedCountry.value === 'BR' && !brasilPhonePattern.test(value)) {
+      setError('Número de telefone inválido. Exemplo: (99) 99999-9999');
+      return false;
+    }
+    setError('');
+    return true;
+  };
+  const handlePhoneChange = (e) => {
+    const value = e.target.value;
+    setCelular(value);
+    validatePhoneNumber(value);
+  };
+
   const handleCadastro = async (e) => {
     e.preventDefault();
+    console.log(selectedCountry);
+  const cleanedPhone = celular.replace(/\D/g, ''); // Remove tudo que não é dígito
 
     // Validar se o CPF é válido
     if (!isValidCpf(cpf)) {
-      alert("CPF inválido! Verifique o número e tente novamente.");
+      setMessage("CPF inválido! Verifique o número e tente novamente.");
       return;
     }
+    console.log("esse e o pais",selectedCountry.label)
+    console.log("?",aceiteTermoLGPD)
+    console.log("?",aceiteOfertas)
+    console.log("cel",cleanedPhone)
+   
 
     // Preparar os dados do cliente para o cadastro
     const clientData = {
       RegisterDate: new Date().toISOString().split('T')[0],
       PersonName: name,
       Cpf: cpf.replace(/\D/g, ''), // Remove a formatação do CPF antes de enviar
-      Phone: celular,
-      BirthDate: null,
+      Phone: cleanedPhone, // Usar o número do celular limpo
+      BirthDate: 1,
       Mail: email,
-      CountryName:selectedCountry,
+      CountryName:selectedCountry.label.toString(),
       HasAcceptedParticipation: aceiteTermoLGPD, // Use o estado do rádio
       HasAcceptedPromotion: aceiteOfertas // Use o estado do rádio
     };
+    console.log(clientData)
 
     try {
       // Verifica se o Termo LGPD foi aceito
@@ -329,7 +361,7 @@ const Cadastro = () => {
           return; // Impede o envio dos dados se o termo não for aceito
         }
       // Enviar os dados via POST para o endpoint
-      const response = await fetch('http://3.133.92.17:3333/Person/Person', {
+      const response = await fetch(`${BASE_URL}/Person/Person`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -374,48 +406,56 @@ const Cadastro = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
+
   const handleTermoLGPDChange = (e) => {
     setAceiteTermoLGPD(prev => !prev);
   };
 
   const handleOfertasChange = (e) => {
-    setAceiteTermoLGPD(prev => !prev);
+     setAceiteOfertas(prev => !prev);
   };
+
+
  
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100 p-4" 
+    <div className="flex flex-col min-h-screen items-center justify-center" 
     style={{ backgroundImage: `url('/fundomenu.png')`, backgroundSize: 'cover' }}>
       
-      <div className=" p-6 rounded-lg shadow-md w-[1000px] "
+       <div
+          className="img tabletModelo-destino"
+          style={{
+            height: '28vh',
+            width: '90vw',
+            backgroundImage: 'url(destinos.png)',
+            backgroundSize: 'cover', 
+            backgroundPosition: 'center',
+            marginTop:'100px'
+            // border:'solid yellow 1px'
+          }}
+        ></div>
+      
+      <div className="p-6 rounded-lg shadow-md w-full max-w-[1000px] mx-auto"
       //  style={{ border:'solid red 1px' }}
        >
        
-       <div
-          className="img"
-          style={{
-            height: '40vh', 
-            width: '72vw',  
-            backgroundImage: 'url(destinos.png)',
-            backgroundSize: 'cover', 
-            backgroundPosition: 'center', 
-            // border:'solid yellow 1px'
-          }}
-        >
-        </div>
+      
 
 
         {/* Formulário que pega email e senha */}
         <form onSubmit={handleCadastro} className="space-y-4">
 
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 w-full max-w-screen-lg">
-                  <div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 gap-x-20 w-full max-w-screen-lg ">
+                  <div >
                     <input
                       type="name"
                       placeholder="nome completo"
-                      className="w-full shadow-x8 pl-12 opacity-50 pr-4 py-2 border-transparent bg-gradient-to-r text-white focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-[20px]"
-                      style={{ backgroundColor: '#1861af', height: '50px' }}
+                      className="w-full shadow-x8 pl-12 pr-4 py-2  text-white  rounded-[20px] cadastro-input"
+                      style={{ backgroundColor: 'rgba(65, 105, 225, 0.3)', // Cor de fundo com opacidade (0.6, ajustável), 
+                        height: '60px',  boxShadow: '0px 10px 10px -5px rgba(0, 0, 0, 0.8)',
+                        borderBottom: '3px solid black' }}
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       required
@@ -425,8 +465,10 @@ const Cadastro = () => {
                     <input
                       type="email"
                       placeholder="email"
-                      className="w-full shadow-x8 pl-12 opacity-50 pr-4 py-2 border-transparent bg-gradient-to-r text-white focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-[20px]"
-                      style={{ backgroundColor: '#1861af', height: '50px' }}
+                      className="w-full shadow-x8 pl-12 pr-4 py-2  text-white  rounded-[20px] cadastro-input"
+                      style={{ backgroundColor: 'rgba(65, 105, 225, 0.3)', // Cor de fundo com opacidade (0.6, ajustável), 
+                        height: '60px',  boxShadow: '0px 10px 10px -5px rgba(0, 0, 0, 0.8)',
+                        borderBottom: '3px solid black'}}
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
@@ -437,8 +479,10 @@ const Cadastro = () => {
                     <input
                       type="cpf"
                       placeholder="cpf"
-                      className="w-full shadow-x8 pl-12 opacity-50 pr-4 py-2 border-transparent bg-gradient-to-r text-white focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-[20px]"
-                      style={{ backgroundColor: '#1861af', height: '50px' }}
+                      className="w-full shadow-x8 pl-12 pr-4 py-2  text-white  rounded-[20px] cadastro-input"
+                      style={{ backgroundColor: 'rgba(65, 105, 225, 0.3)', // Cor de fundo com opacidade (0.6, ajustável), 
+                        height: '60px',  boxShadow: '0px 10px 10px -5px rgba(0, 0, 0, 0.8)',
+                        borderBottom: '3px solid black'}}
                       value={cpf}
                       onChange={(e) => {
                         setCpf(e.target.value);
@@ -448,39 +492,69 @@ const Cadastro = () => {
                     />
                   </div>
                   <div>
-                    <input
-                      type="celular"
-                      placeholder="celular/whatsApp"
-                      className="w-full shadow-x8 pl-12 opacity-50 pr-4 py-2 border-transparent bg-gradient-to-r text-white focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-[20px]"
-                      style={{ backgroundColor: '#1861af', height: '50px' }}
-                      value={celular}
-                      onChange={(e) => setCelular(e.target.value)}
-                      required
-                    />
-                  </div>
+                      <InputMask
+                              mask={selectedCountry.value === 'BR' ? '(99) 99999-9999' : ''}
+                              placeholder="celular/whatsApp"
+                              className={`w-full shadow-x8 pl-12 pr-4 py-2 text-white rounded-[20px] cadastro-input ${error ? 'border-red-500' : ''}`}
+                              style={{
+                                backgroundColor: 'rgba(65, 105, 225, 0.3)',
+                                height: '60px',
+                                boxShadow: '0px 10px 10px -5px rgba(0, 0, 0, 0.8)',
+                                borderBottom: '3px solid black'
+                              }}
+                              value={celular}
+                              onChange={handlePhoneChange}
+                              required
+                            />
+                            {error && <p className="text-red-500">{error}</p>} {/* Mensagem de erro */}
+                    </div>
 
 
 
 
                   <div>
-                  <Select
-                      value={selectedCountry}
-                      onChange={handleChange}
-                      options={countries}
-                      formatOptionLabel={formatOptionLabel}
-                      styles={customStyles}
-                      className="w-full shadow-x8 pl-12 pr-4 py-2 border-transparent bg-gradient-to-r text-white focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-[20px]"
-                      style={{ backgroundColor: '#1861af', height: '50px' }}
-                      required
-                    />
-                  </div>
+                      <Select
+                        value={selectedCountry}
+                        onChange={handleChange}
+                        options={countries}
+                        formatOptionLabel={formatOptionLabel}
+                        styles={{
+                          ...customStyles,
+                          control: (base) => ({
+                            ...base,
+                            width: '100%', // Garantindo que o controle ocupe toda a largura
+                            height: '60px', // Definindo a altura
+                            backgroundColor: 'rgba(65, 105, 225, 0.3)', // Cor de fundo com opacidade
+                            boxShadow: '0px 10px 10px -5px rgba(0, 0, 0, 0.8)', // Sombra
+                            borderBottom: '3px solid black', // Borda inferior
+                            border: 'none', // Remover bordas padrão
+                            borderRadius: '20px', // Bordas arredondadas
+                            paddingLeft: '3rem', // Para compensar o padding interno
+                            paddingRight: '1rem', // Para compensar o padding interno
+                          }),
+                          singleValue: (base) => ({
+                            ...base,
+                            color: 'white', // Cor do texto
+                          }),
+                          dropdownIndicator: (base) => ({
+                            ...base,
+                            color: 'white', // Cor do ícone do dropdown
+                          }),
+                          indicatorSeparator: () => ({
+                            display: 'none', // Remover o separador do indicador
+                          }),
+                        }}
+                        required
+                      />
+                    </div>
+
 
 
 
           </div>
 
           <div className="flex flex-col  p-1">
-                      <p className="text-white text-xs mb-4">
+                      <p className="text-white text-cadastro mb-4 ">
                         Os dados pessoais coletados em razão deste evento serão tratados em total conformidade com a Lei Federal nº 13.709/2018 (Lei Geral de Proteção de Dados).
                       </p>
 
@@ -508,10 +582,10 @@ const Cadastro = () => {
             </div>
 
 
-            <div className="flex flex-col md:flex-row justify-between items-center"> {/* flex-col para mobile e flex-row para telas médias em diante */}
+            <div className="flex flex-col md:flex-row justify-between items-center "> {/* flex-col para mobile e flex-row para telas médias em diante */}
                   <button
                     type="submit"
-                    className="w-[170px] h-[40px] cadastrar text-white text-xl font-bold hover:bg-blue-600 transition-colors rounded-[20px] flex justify-center items-center mb-2 md:mb-0" // mb-2 para espaçamento em mobile
+                    className="w-[170px] h-[40px] cadastrar text-white text-xl font-bold  transition-colors rounded-[20px] flex justify-center items-center mb-2 md:mb-0" // mb-2 para espaçamento em mobile
                     style={{
                       boxShadow: '0px 10px 10px -5px rgba(0, 0, 0, 0.8)',
                       borderBottom: '3px solid black',
@@ -522,7 +596,7 @@ const Cadastro = () => {
 
                   <div className="flex justify-end"> {/* Mantém a flexibilidade para botões */}
                     <button
-                      className="w-[170px] h-[40px] voltar text-white text-xl font-bold hover:bg-blue-600 transition-colors rounded-[20px] flex justify-center items-center mr-2" // mr-2 para espaçamento entre os botões
+                      className="w-[170px] h-[40px] voltar text-white text-xl font-bold  transition-colors rounded-[20px] flex justify-center items-center mr-2" // mr-2 para espaçamento entre os botões
                       style={{
                         boxShadow: '0px 10px 10px -5px rgba(0, 0, 0, 0.8)',
                         borderBottom: '3px solid black',
@@ -533,9 +607,9 @@ const Cadastro = () => {
                     </button>
 
                     {/* Exibir após o cadastro */}
-                    {/* {isCadastroFeito && ( */}
+                    {isCadastroFeito && (
                     <button
-                      className="agendar w-[170px] h-[40px] voltar text-white text-xl font-bold hover:bg-blue-600 transition-colors rounded-[20px] flex justify-center items-center"
+                      className="agendar w-[170px] h-[40px] voltar text-white text-xl font-bold  transition-colors rounded-[20px] flex justify-center items-center"
                       style={{
                         boxShadow: '0px 10px 10px -5px rgba(0, 0, 0, 0.8)',
                         borderBottom: '3px solid black',
@@ -544,7 +618,7 @@ const Cadastro = () => {
                     >
                       Agendar
                     </button>
-                    {/* )} */}
+                     )} 
                   </div>
                 </div>
 
@@ -565,7 +639,7 @@ const Cadastro = () => {
        {/* Imagem colocada abaixo dos inputs e botões */}
           <div className="flex justify-center items-center"> {/* Container flex para centralizar */}
             <div
-              className="assinatura-dashboard"
+              className=" tabletModelo-assinatura "
               style={{
                 height: '20vh',
                 width: '20vw',

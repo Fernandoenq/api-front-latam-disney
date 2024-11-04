@@ -24,8 +24,8 @@ const Agendar = () => {
   useEffect(() => {
         // Recupera os dados do localStorage
         const storedUserId = localStorage.getItem('userId');
-    const storedCpf = localStorage.getItem('cpf'); // Recupera o CPF do localStorage
-    const storedIDbyCPF = localStorage.getItem('personId'); // Recupera o CPF do localStorage
+    // const storedCpf = localStorage.getItem('cpf'); // Recupera o CPF do localStorage
+    // const storedIDbyCPF = localStorage.getItem('personId'); // Recupera o CPF do localStorage
 
     if (storedUserId ) {
       setUserId(storedUserId); // Salva o OrganizerId no estado
@@ -34,21 +34,21 @@ const Agendar = () => {
       // Se os dados não existirem, redireciona para a tela de login ou dashboard
       navigate('/login');
     }
+    fetchSchedulingData();
 
-
-    if (storedCpf) {
-      setCpf(storedCpf); // Armazena o CPF no estado
-      fetchSchedulingData(storedCpf); // Busca os dados de agendamento usando o CPF
-    } else {
-      navigate('/dashboard'); // Se não houver CPF, redireciona para o dashboard
-    }
-    if (storedIDbyCPF) {
-      setPersonId(storedIDbyCPF); 
-      console.log("esse e o id da pessoa do cpf", storedIDbyCPF)
-      fetchSchedulingData(storedCpf); 
-    } else {
-      alert("nao pegou o id do cpf")
-    }
+    // if (storedCpf) {
+    //   setCpf(storedCpf); // Armazena o CPF no estado
+    //   fetchSchedulingData(storedCpf); // Busca os dados de agendamento usando o CPF
+    // } else {
+    //   navigate('/dashboard'); // Se não houver CPF, redireciona para o dashboard
+    // }
+    // if (storedIDbyCPF) {
+    //   setPersonId(storedIDbyCPF); 
+    //   console.log("esse e o id da pessoa do cpf", storedIDbyCPF)
+    //   fetchSchedulingData(storedCpf); 
+    // } else {
+    //   alert("nao pegou o id do cpf")
+    // }
   }, [navigate]);
 
   const fetchSchedulingData = async () => {
@@ -126,9 +126,7 @@ const Agendar = () => {
   const handleOpenModal = () => {
     if (selectedChair !== null) {
       setModalOpen(true);
-    } else {
-      alert("Selecione uma cadeira antes de confirmar.");
-    }
+    } 
   };
 
   // Fechar modal
@@ -170,22 +168,29 @@ const Agendar = () => {
   };
 
   return (
-    <div  className="flex flex-col min-h-screen items-center justify-center"
+    <div className="flex flex-col min-h-screen items-center justify-center celular-agendar"
     style={{ backgroundImage: `url('/fundomenu.png')`, backgroundSize: 'cover' }}>
 
-<div className="img"
-        style={{
-          height: '38vh',
-          width: '90vw',
-          backgroundImage: 'url(destinos.png)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      />
+<div
+          className="img tabletModelo-destino"
+          style={{
+            height: '28vh',
+            width: '90vw',
+            backgroundImage: 'url(destinos.png)',
+            backgroundSize: 'cover', 
+            backgroundPosition: 'center',
+            marginTop:'10px'
+            // border:'solid yellow 1px'
+          }}
+        ></div>
 
 
-      <div  className="p-6 rounded-lg shadow-md w-full max-w-sm md:max-w-md lg:max-w-lg largura"
-  style={{ backgroundColor: '#1861af' }}>
+      <div className="p-6 rounded-lg shadow-md w-full sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-3/5 largura horarios-agendar" 
+    style={{ 
+      backgroundColor: 'rgba(65, 105, 225, 0.2)',
+      boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.8)',
+      border: '0.4px solid black',
+    }}>
       
 
           {/* Modal de confirmação */}
@@ -197,34 +202,37 @@ const Agendar = () => {
             </div>
           </div>
         )}
-<p className="px-4 py-2 text-center text-white text-lg ">Concluir horários</p>
-        <div style={{ maxHeight: '220px', overflowY: 'auto' }}>
+
+
+<p className="px-4 py-2 text-center text-white text-lg aumentando-horarios">Concluir horários</p>
+
+        <div style={{ maxHeight: '220px', overflowY: 'auto' }} className="horarios">
               {/* Tabela de agendamentos */}
-              <table className="table-auto w-full shadow-md text-white rounded-md" style={{ backgroundColor: '#1861af' }}>
+              <table className="table-auto w-full shadow-md text-white rounded-md text-sm md:text-lg"  style={{ overflowX: 'auto' }}>
           
               <tbody>
               {schedulingData.length > 0 ? (
                 schedulingData.map((item, index) => (
                   <tr key={index} className="border-b border-dotted">
-                    <td className="px-4 py-2 text-center text-lg text-4xl">
+                    <td className="px-2 py-1 text-center  md:text-6xl horarios-cadeiras">
                       {new Date(item.TurnTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </td>
-                    <td className="px-2 py-2 text-center">
+                    <td className="px-2 py-1  md:text-6xl horarios-cadeiras">
                       <button
                         className={getChairButtonClass(item.chair1, item.schedulingId1, 1)}
                         onClick={() => handleChairSelection(item.schedulingId1, 1, item.chair1, item.TurnTime)}
                         disabled={!item.schedulingId1}
                       >
-                        <FontAwesomeIcon icon={faChair} /> <span className="text-lg">1</span>
+                        <FontAwesomeIcon icon={faChair} /> 
                       </button>
                     </td>
-                    <td className="px-2 py-2 text-center">
+                    <td className="px-2 py-1  md:text-6xl horarios-cadeiras">
                       <button
                         className={getChairButtonClass(item.chair2, item.schedulingId2, 2)}
                         onClick={() => handleChairSelection(item.schedulingId2, 2, item.chair2, item.TurnTime)}
                         disabled={!item.schedulingId2}
                       >
-                        <FontAwesomeIcon icon={faChair} /> <span className="text-lg">2</span>
+                        <FontAwesomeIcon icon={faChair} /> 
                       </button>
                     </td>
                   </tr>
@@ -241,15 +249,50 @@ const Agendar = () => {
       
       </div>
 
-      <div className="mt-4 flex justify-between w-full max-w-md">
-        <button className="text-white voltar py-2 px-4 rounded-md hover:bg-gray-400 transition-colors" onClick={() => navigate('/dashboard')}>
-          Voltar
-        </button>
-  
-        <button className="bg-blue-500 cadastrar text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors" onClick={handleOpenModal}>
-          Confirmar
-        </button>
-      </div>
+      {/* Alinhamento dos botões "Voltar" e "Confirmar" */}
+  <div className="w-full sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-3/5  max-w-[1100px] flex justify-between mt-4">
+    <button 
+      className="w-[170px] h-[40px] voltar text-white text-xl font-bold  transition-colors rounded-[20px] flex justify-center items-center mb-2 md:mb-0" 
+      style={{
+        boxShadow: '0px 10px 10px -5px rgba(0, 0, 0, 0.8)',
+        borderBottom: '3px solid black',
+      }} 
+      onClick={() => navigate('/dashboard')}
+    >
+      Voltar
+    </button>
+
+    <button 
+      className="w-[170px] h-[40px] cadastrar text-white text-xl font-bold  transition-colors rounded-[20px] flex justify-center items-center mb-2 md:mb-0" 
+      style={{
+        boxShadow: '0px 10px 10px -5px rgba(0, 0, 0, 0.8)',
+        borderBottom: '3px solid black',
+      }} 
+      onClick={handleOpenModal}
+    >
+      Confirmar
+    </button>
+
+    
+  </div>
+
+    
+
+
+       {/* Imagem colocada abaixo dos inputs e botões */}
+  <div className="flex justify-center items-center"> {/* Container flex para centralizar */}
+            <div
+              className=" tabletModelo-assinatura "
+              style={{
+                height: '20vh',
+                width: '20vw',
+                backgroundImage: 'url(assinatura.png)',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                marginTop:'10px'
+              }}
+            />
+          </div>
 
       {/* Modal de confirmação */}
       {isModalOpen && (
@@ -257,7 +300,7 @@ const Agendar = () => {
           <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm">
             <h2 className="text-xl font-semibold text-center mb-4">Confirmar Agendamento</h2>
             <p className="text-center mb-4">
-              Tem certeza que deseja confirmar o horário da cadeira <strong>{selectedChair}</strong> do horário <strong>{new Date(selectedTurnTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</strong>?
+              Tem certeza que deseja <strong>confirmar</strong> o horário da cadeira <strong>{selectedChair}</strong> do horário <strong>{new Date(selectedTurnTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</strong>?
             </p>
             {/* Flex para os botões */}
             <div className="flex justify-between space-x-4">

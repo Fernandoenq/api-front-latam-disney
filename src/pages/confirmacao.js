@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import BASE_URL from '../config';
 import '../index.css';
 
 const Confirmacao = () => {
@@ -20,7 +21,7 @@ const Confirmacao = () => {
   const verificaCpf = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://3.133.92.17:3333/Person/PersonByCpf/${cpf.replace(/\D/g, '')}`);
+      const response = await fetch(`${BASE_URL}/Person/PersonByCpf/${cpf.replace(/\D/g, '')}`);
       const data = await response.json();
 
       if (response.ok) {

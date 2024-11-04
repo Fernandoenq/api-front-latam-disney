@@ -30,7 +30,7 @@ const Dashboard = () => {
   };
 
   const handleConfirmarClick = () => {
-    navigate('/confirmacao');
+    navigate('/concluir');
   };
 
   const toggleMenu = () => {
@@ -70,26 +70,28 @@ const Dashboard = () => {
       </div>
 
       <div
-        className="img"
+        className="img tabletModelo-destino-dash"
         style={{
           height: '28vh',
           width: '90vw',
           backgroundImage: 'url(destinos.png)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          border:'solid red 1px'
+          // border:'solid red 1px'
         }}
       />
 
       {/* Container das divs */}
-      <div className="card flex flex-col sm:flex-row justify-center gap-5 items-center mt-5 sm:mt-10"
-        style={{ minHeight: '300px', width: '100%', padding: '0 10px' ,border:'solid red 1px'}}
+      <div className="card flex flex-col sm:flex-row justify-center gap-5 items-center mt-5 sm:mt-10 cards"
+        style={{ minHeight: '300px', width: '100%', padding: '0 10px' ,
+          // border:'solid red 1px'
+        }}
       >
         {/* Card de Cadastro */}
         <div 
           onClick={handleCadastroClick}
           className="p-6 rounded-lg shadow-md w-full sm:max-w-xs flex flex-col items-center justify-center card-dashboard"
-          style={{ backgroundColor: 'rgba(65, 105, 225, 0.3)', height: '250px', maxWidth: '300px', boxShadow: '10px 30px 10px -5px rgba(0, 0, 0, 0.8)' }}
+          style={{ backgroundColor: 'rgba(65, 105, 225, 0.3)', height: '250px', maxWidth: '300px', boxShadow: '10px 30px 10px -5px rgba(0.3, 0.3, 0.3, 0.3)' }}
         >
           <img src="cadastro.png" alt="Ícone de Cadastro" className="w-50 h-50 sm:w-50 sm:h-50" />
           <h2 className="text-base sm:text-lg text-white font-semibold text-center mb-10">CADASTRO</h2>
@@ -99,7 +101,7 @@ const Dashboard = () => {
         <div 
           onClick={handleConfirmCPFClick}
           className="p-6 rounded-lg shadow-md w-full sm:max-w-xs flex flex-col items-center justify-center card-dashboard"
-          style={{ backgroundColor: 'rgba(65, 105, 225, 0.3)', height: '250px', maxWidth: '300px' , boxShadow: '10px 30px 10px -5px rgba(0, 0, 0, 0.8)'}}
+          style={{ backgroundColor: 'rgba(65, 105, 225, 0.3)', height: '250px', maxWidth: '300px' , boxShadow: '10px 30px 10px -5px rgba(0.3, 0.3, 0.3, 0.3)'}}
         >
           <img src="agendamento.png" alt="Ícone de Agendamento" className="w-50 h-50 sm:w-50 sm:h-50" />
           <h2 className="text-base sm:text-lg text-white font-semibold text-center mb-10">AGENDAMENTO</h2>
@@ -109,7 +111,7 @@ const Dashboard = () => {
         <div 
           onClick={handleConfirmarClick}
           className="p-6 rounded-lg shadow-md w-full sm:max-w-xs flex flex-col items-center justify-center card-dashboard"
-          style={{ backgroundColor: 'rgba(65, 105, 225, 0.3)', height: '250px', maxWidth: '300px' ,boxShadow: '10px 30px 10px -5px rgba(0, 0, 0, 0.8)' }}
+          style={{ backgroundColor: 'rgba(65, 105, 225, 0.3)', height: '250px', maxWidth: '300px' ,boxShadow: '10px 30px 10px -5px rgba(0.3, 0.3, 0.3, 0.3)' }}
         >
           <img src="presenca.png" alt="Ícone de Confirmar Presença" className="w-50 h-50 sm:w-50 sm:h-50" />
           <h2 className="text-base sm:text-lg text-white font-semibold text-center mb-10">CONFIRMAR PRESENÇA</h2>
@@ -118,7 +120,7 @@ const Dashboard = () => {
 
       {/* Imagem colocada abaixo dos inputs e botões */}
       <div 
-        className="flex justify-center tabletModelo-assinatura"
+        className="flex justify-center tabletModelo-assinatura assinatura-dash-tablet-normal"
         style={{
           height: '20vh',
           width: '20vw',
