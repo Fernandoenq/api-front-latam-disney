@@ -1,6 +1,5 @@
-// App.js
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
 import Login from './Login';
 import Dashboard from './pages/dashboard';
@@ -9,19 +8,11 @@ import { AuthProvider } from './AuthContext';
 import Planilha from './pages/planilha';
 import Confirmacao from './pages/confirmacao';
 import Agendamento from './pages/agendamento';
-import CPF from './pages/confirmaCPF'
+import CPF from './pages/confirmaCPF';
 import Agendar from './pages/agendar';
 import Reagendamento from './pages/confirmaReagendamento';
-import PrivateRoute from './PrivateRoute'; // Importa o PrivateRoute
+import PrivateRoute from './PrivateRoute'; 
 import Concluir from './pages/concluir';
-
-
-//numero no cadastro ter validacao pra enivar pro zap, colocar pais no endpoint
-//deixar todas as telas para celular, tablet,computador e tablet grande arrumada
-//colocar spinner nos processos 
-//tirar todos os alerts e console.log
-//arrumar dashboard
-
 
 function App() {
   return (
@@ -29,18 +20,18 @@ function App() {
       <Router>
         <div>
           <Routes>
-            <Route path="/" element={<Login />} />
+            {/* Redireciona a raiz para /login */}
+            <Route path="/" element={<Navigate to="/login" replace />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/dashboard" element={<PrivateRoute element={<Dashboard />} />} />
             <Route path="/cadastro" element={<PrivateRoute element={<Cadastro />} />} />
             <Route path="/planilha" element={<PrivateRoute element={<Planilha />} />} />
             <Route path="/confirmacao" element={<PrivateRoute element={<Confirmacao />} />} />
             <Route path="/confirmacpf" element={<PrivateRoute element={<CPF />} />} />
-            {/* agendamentos dos clientes */}
             <Route path="/agendamento" element={<PrivateRoute element={<Agendamento />} />} />
             <Route path="/agendar" element={<PrivateRoute element={<Agendar />} />} />
             <Route path="/reagendamento" element={<PrivateRoute element={<Reagendamento />} />} />
             <Route path="/concluir" element={<PrivateRoute element={<Concluir />} />} />
-            <Route path="/planilha" element={<PrivateRoute element={<Planilha />} />} />
           </Routes>
         </div>
       </Router>
@@ -49,4 +40,3 @@ function App() {
 }
 
 export default App;
-

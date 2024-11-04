@@ -13,6 +13,39 @@ body {
     padding: 0 00px; /* Adiciona espaçamento interno */
   
 }
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Evita o scroll horizontal */
+}
+
+.container {
+  max-width: 100%; /* Garante que o container não exceda a largura da tela */
+  overflow: hidden; /* Previne overflow indesejado */
+}
+
+img {
+  max-width: 100%; /* Faz com que imagens se ajustem ao tamanho do container */
+  height: auto; /* Mantém a proporção das imagens */
+}
+.flex-container {
+  display: flex;
+  flex-wrap: wrap; /* Permite que os itens quebrem para a próxima linha */
+  justify-content: center; /* Alinha itens no centro */
+}
+
+.flex-item {
+  flex: 1 1 auto; /* Os itens vão ocupar espaço responsivamente */
+  min-width: 200px; /* Define uma largura mínima */
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Colunas responsivas */
+  gap: 10px; /* Espaçamento entre os itens */
+}
+
+
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',

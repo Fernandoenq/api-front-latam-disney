@@ -21,9 +21,32 @@ const Cadastro = () => {
   const [aceiteOfertas, setAceiteOfertas] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const options = { timeZone: 'America/Sao_Paulo', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
-  const dateInSaoPaulo = new Intl.DateTimeFormat('pt-BR', options).format(new Date());
 
+
+  const options = {
+    timeZone: 'America/Sao_Paulo',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false
+  };
+  
+  // Formatar a data e hora no fuso horário de São Paulo
+  const dateInSaoPaulo = new Intl.DateTimeFormat('pt-BR', options).format(new Date());
+  
+  // Extrair e montar manualmente a data em formato ISO
+  const [datePart, timePart] = dateInSaoPaulo.split(', ');
+  const [day, month, year] = datePart.split('/');
+  const [hour, minute, second] = timePart.split(':');
+  
+  // Criar uma string ISO sem conversão de fuso horário
+  const formattedDate = `${year}-${month}-${day}T${hour}:${minute}:${second}-03:00`; // UTC-3 para São Paulo
+  
+  console.log(formattedDate);
+  
 
   const countries = [
     { value: 'AF', label: 'Afeganistão', flag: 'https://flagcdn.com/af.svg' },
@@ -342,7 +365,7 @@ const Cadastro = () => {
 
     // Preparar os dados do cliente para o cadastro
     const clientData = {
-      RegisterDate: new Date().toISOString().split('T')[0],
+      RegisterDate: formattedDate,
       PersonName: name,
       Cpf: cpf.replace(/\D/g, ''), // Remove a formatação do CPF antes de enviar
       Phone: cleanedPhone, // Usar o número do celular limpo
