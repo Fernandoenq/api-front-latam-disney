@@ -1,18 +1,44 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Latam Sans Hairline', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  
- 
     width: 100%;
     max-width: 1920px; /* Defina um valor máximo adequado */
     margin: 0 auto; /* Centraliza o container */
     padding: 0 00px; /* Adiciona espaçamento interno */
   
 }
+
+@font-face {
+  font-family: 'Latam Sans Hairline';
+  src: url('./assets/fonts/Latam_Sans_Hairline.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Latam Sans Hairline';
+  src: url('./assets/fonts/Latam_Sans_Hairline.otf') format('opentype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Latam Sans Hairline';
+  src: url('./assets/fonts/Latam_Sans_Hairline.otf') format('opentype');
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Latam Sans Hairline';
+  src: url('./assets/fonts/Latam_Sans_Regular.otf') format('opentype');
+  font-weight: 100; /* Usando um peso específico se necessário */
+  font-style: normal;
+}
+
+
 html, body {
   margin: 0;
   padding: 0;
@@ -45,7 +71,9 @@ img {
   gap: 10px; /* Espaçamento entre os itens */
 }
 
-
+.font-latam{
+  font-family: 'Latam Sans', sans-serif !important;
+}
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
@@ -61,6 +89,12 @@ code {
   height: 200px;
   
 }
+.card-dashboard:hover {
+  transform: scale(1.05); /* Aumenta ligeiramente o tamanho */
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2); /* Adiciona uma sombra mais intensa */
+  border-color: rgb(101, 100, 100); /* Escurece ligeiramente a borda */
+}
+
 
 
 
@@ -92,6 +126,23 @@ code {
     margin-left: 100px;
     }
 }
+
+@media (min-width: 1300px) and (max-width: 1340px) and (min-height: 750px) and (max-height: 820px) {
+  .tabletModelo-assinatura-login{
+    transform: translateY(5.1rem);
+    margin-top:0px !important;
+    height: 20vh !important;
+    width: 30vh !important;
+  }
+  .tabletModelo-assinatura{
+   
+    margin-top:0px !important;
+    height: 20vh !important;
+    width: 30vh !important;
+  }
+}
+
+
 
 /* 1920x1200 */
 @media (min-width: 1850px) and (max-width: 1940px) and (min-height: 1150px) and (max-height: 1250px) {
@@ -126,7 +177,7 @@ code {
       margin-top:100px !important
     }
      /* Aumenta o tamanho dos inputs */
-     .cadastro-input {
+    .cadastro-input {
     font-size: 1.2em;
     padding: 12px 20px;
     height:80px !important;
@@ -331,7 +382,7 @@ input:focus {
 }
 
 .responsive-width {
-  width: 500px; /* Largura para telas maiores */
+  width: 400px; /* Largura para telas maiores */
 }
 
 

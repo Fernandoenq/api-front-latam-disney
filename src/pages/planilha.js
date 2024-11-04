@@ -1,23 +1,22 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import BASE_URL from '../config';
 
 const Planilha = () => {
-  // Estado para armazenar os dados recebidos do endpoint
   const [dados, setDados] = useState([]);
+  const navigate = useNavigate();
 
-  // Função para buscar dados do endpoint
   useEffect(() => {
     const fetchDados = async () => {
       try {
-        const response = await fetch('http://3.133.92.17:3333/Scheduling/Dashboard');
+        const response = await fetch(`${BASE_URL}/Scheduling/Dashboard`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
   
-        // Obter como texto para análise
         const textData = await response.text();
-        console.log("Resposta bruta:", textData);  // Verificar o conteúdo completo
-  
-        // Remover valores `NaN` ou outros que não sejam válidos
+        console.log("Resposta bruta:", textData);
+
         const cleanedData = textData.replace(/NaN/g, 'null');
         const data = JSON.parse(cleanedData);
   
@@ -29,9 +28,7 @@ const Planilha = () => {
   
     fetchDados();
   }, []);
-  
 
-  // Função para exibir o status de agendamento com base no número
   const getStatusLabel = (status) => {
     switch (status) {
       case 1:
@@ -45,44 +42,74 @@ const Planilha = () => {
     }
   };
 
+  const formatCPF = (cpf) => {
+    if (!cpf) return '';
+    return cpf.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})$/, "$1.$2.$3-$4");
+  };
+
   return (
-    <div className="overflow-x-auto">
-      <table className="min-w-full bg-white border border-gray-300">
-        <thead>
-          <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-            <th className="py-3 px-6 text-left">TurnTime</th>
-            <th className="py-3 px-6 text-left">Cadeira</th>
-            <th className="py-3 px-6 text-left">Nome</th>
-            <th className="py-3 px-6 text-left">CPF</th>
-            <th className="py-3 px-6 text-center">Status</th>
-            <th className="py-3 px-6 text-center">Data do Agendamento</th>
-          </tr>
-        </thead>
-        <tbody className="text-gray-700 text-sm font-light">
-          {dados.map((item, index) => (
-            <tr key={index} className="border-b border-gray-300 hover:bg-gray-100">
-              <td className="py-3 px-6 text-left whitespace-nowrap">{item.TurnTime}</td>
-              <td className="py-3 px-6 text-left">{item.ChairName}</td>
-              <td className="py-3 px-6 text-left">{item.PersonName}</td>
-              <td className="py-3 px-6 text-left">{item.Cpf}</td>
-              <td className="py-3 px-6 text-center">
-                <span
-                  className={`py-1 px-3 rounded-full text-xs ${
-                    item.SchedulingStatus === 1
-                      ? 'bg-green-200 text-green-600'   // Status 1: Verde
-                      : item.SchedulingStatus === 2
-                      ? 'bg-red-200 text-red-600'       // Status 2: Vermelho
-                      : 'bg-gray-200 text-gray-600'     // Status 3: Cinza
-                  }`}
-                >
-                  {getStatusLabel(item.SchedulingStatus)}
-                </span>
-              </td>
-              <td className="py-3 px-6 text-center">{item.SchedulingDate}</td>
+    <div
+      style={{
+        backgroundImage: `url('/fundomenu.png')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        paddingTop: "60px",
+        paddingBottom: "100px",
+        position: "relative"
+      }}
+    >
+      {/* Botão de retorno */}
+      <button
+        onClick={() => navigate("/dashboard")}
+        className="absolute top-4 left-4 bg-blue-600 hover:bg-blue-700 text-white rounded-full p-2"
+        style={{ zIndex: 50 }} // Define um z-index alto para o botão
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+
+      <div
+        className="overflow-x-auto rounded-lg shadow-md my-8 mx-auto"
+        style={{ maxWidth: '90%', backgroundColor: '#ebf8ff' }}
+      >
+        <table className="w-full border border-gray-300">
+          <thead style={{ backgroundColor: '#1e3a8a' }}>
+            <tr className="text-white uppercase text-sm leading-normal">
+              <th className="py-3 px-6 text-left">Horário</th>
+              <th className="py-3 px-6 text-left">Cadeira</th>
+              <th className="py-3 px-6 text-left">Nome</th>
+              <th className="py-3 px-6 text-left">CPF</th>
+              <th className="py-3 px-6 text-center">Status</th>
+              <th className="py-3 px-6 text-center">Data do Agendamento</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody className="text-gray-700 text-sm font-light">
+            {dados.map((item, index) => (
+              <tr key={index} className="border-b border-gray-300 hover:bg-blue-200">
+                <td className="py-3 px-6 text-left whitespace-nowrap">{item.TurnTime}</td>
+                <td className="py-3 px-6 text-left">{item.ChairName}</td>
+                <td className="py-3 px-6 text-left">{item.PersonName}</td>
+                <td className="py-3 px-6 text-left">{formatCPF(item.Cpf)}</td>
+                <td className="py-3 px-6 text-center">
+                  <span
+                    className={`py-1 px-3 rounded-full text-xs ${
+                      item.SchedulingStatus === 1
+                        ? 'bg-green-200 text-green-600'
+                        : item.SchedulingStatus === 2
+                        ? 'bg-red-200 text-red-600'
+                        : 'bg-gray-200 text-gray-600'
+                    }`}
+                  >
+                    {getStatusLabel(item.SchedulingStatus)}
+                  </span>
+                </td>
+                <td className="py-3 px-6 text-center">{item.SchedulingDate}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

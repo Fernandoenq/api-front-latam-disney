@@ -48,7 +48,7 @@ const Dashboard = () => {
             onClick={toggleMenu} 
             className="text-white p-2 rounded-full focus:outline-none"
           >
-            <FaChevronDown size={20} />
+            <FaChevronDown size={25} />
           </button>
 
         {isMenuOpen && (
@@ -94,17 +94,17 @@ const Dashboard = () => {
           style={{ backgroundColor: 'rgba(65, 105, 225, 0.3)', height: '250px', maxWidth: '300px', boxShadow: '10px 30px 10px -5px rgba(0.3, 0.3, 0.3, 0.3)' }}
         >
           <img src="cadastro.png" alt="Ícone de Cadastro" className="w-50 h-50 sm:w-50 sm:h-50" />
-          <h2 className="text-base sm:text-lg text-white font-semibold text-center mb-10">CADASTRO</h2>
+          <h2 className="text-base sm:text-lg text-white font-semibold text-center mb-10">cadastro</h2>
         </div> 
 
         {/* Card de Agendamento */}
         <div 
           onClick={handleConfirmCPFClick}
           className="p-6 rounded-lg shadow-md w-full sm:max-w-xs flex flex-col items-center justify-center card-dashboard"
-          style={{ backgroundColor: 'rgba(65, 105, 225, 0.3)', height: '250px', maxWidth: '300px' , boxShadow: '10px 30px 10px -5px rgba(0.3, 0.3, 0.3, 0.3)'}}
+          style={{ backgroundColor: 'rgba(65, 105, 225, 0.3)', height: '250px', maxWidth: '300px' , boxShadow: '10px 30px 10px -5px rgba(0.3, 0.3, 0.3, 0.3)', }}
         >
           <img src="agendamento.png" alt="Ícone de Agendamento" className="w-50 h-50 sm:w-50 sm:h-50" />
-          <h2 className="text-base sm:text-lg text-white font-semibold text-center mb-10">AGENDAMENTO</h2>
+          <h2 className="text-base sm:text-lg text-white font-semibold text-center mb-10">agendamento</h2>
         </div>
 
         {/* Card de Confirmar Presença */}
@@ -114,7 +114,7 @@ const Dashboard = () => {
           style={{ backgroundColor: 'rgba(65, 105, 225, 0.3)', height: '250px', maxWidth: '300px' ,boxShadow: '10px 30px 10px -5px rgba(0.3, 0.3, 0.3, 0.3)' }}
         >
           <img src="presenca.png" alt="Ícone de Confirmar Presença" className="w-50 h-50 sm:w-50 sm:h-50" />
-          <h2 className="text-base sm:text-lg text-white font-semibold text-center mb-10">CONFIRMAR PRESENÇA</h2>
+          <h2 className="text-base sm:text-lg text-white font-semibold text-center mb-10">confirmar presença</h2>
         </div>
       </div>
 

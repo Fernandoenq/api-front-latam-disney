@@ -128,7 +128,7 @@ const Agendamento = () => {
             // border:'solid yellow 1px'
           }}>
   <button
-    className="text-white font-bold voltar py-2 px-4 rounded-[20px]  transition-colors w-full sm:w-auto sm:mr-2 mb-2 btn-large" // Adiciona classe customizada
+    className="text-white font-bold voltar py-2 px-4 rounded-[20px]  transition-colors w-full sm:w-auto sm:mr-2 mb-2 btn-large font-latam" // Adiciona classe customizada
     style={{
       boxShadow: '0px 10px 10px -5px rgba(0, 0, 0, 0.8)',
       borderBottom: '3px solid black',
@@ -139,7 +139,7 @@ const Agendamento = () => {
   </button>
 
   <button
-    className=" font-bold agendar text-white py-2 px-4  rounded-[20px] transition-colors w-full sm:w-auto sm:mr-2 mb-2 btn-large" // Adiciona classe customizada
+    className=" font-bold agendar text-white py-2 px-4  rounded-[20px] transition-colors w-full sm:w-auto sm:mr-2 mb-2 btn-large font-latam" // Adiciona classe customizada
     style={{
       boxShadow: '0px 10px 10px -5px rgba(0, 0, 0, 0.8)',
       borderBottom: '3px solid black',
@@ -151,7 +151,7 @@ const Agendamento = () => {
   </button>
 
   <button
-    className=" cadastrar font-bold text-white py-2 px-4 rounded-[20px]  transition-colors w-full sm:w-auto btn-large-novo" // Adiciona classe customizada
+    className=" cadastrar font-bold text-white py-2 px-4 rounded-[20px]  transition-colors w-full sm:w-auto btn-large-novo font-latam" // Adiciona classe customizada
     style={{
       boxShadow: '0px 10px 10px -5px rgba(0, 0, 0, 0.8)',
       borderBottom: '3px solid black',

@@ -40,7 +40,7 @@ const Agendar = () => {
     if (storedIDbyCPF) {
       setPersonId(storedIDbyCPF);
     } else {
-      alert("Não foi possível recuperar o ID pelo CPF.");
+      // alert("Não foi possível recuperar o ID pelo CPF.");
     }
   }, [navigate]);
 
@@ -245,7 +245,7 @@ const Agendar = () => {
   {/* Alinhamento dos botões "Voltar" e "Confirmar" */}
   <div className="w-full sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-3/5  max-w-[1100px] flex justify-between mt-4">
     <button 
-      className="w-[170px] h-[40px] voltar text-white text-xl font-bold  transition-colors rounded-[20px] flex justify-center items-center mb-2 md:mb-0" 
+      className="w-[170px] h-[40px] voltar text-white text-xl font-bold  transition-colors rounded-[20px] flex justify-center items-center mb-2 md:mb-0 font-latam" 
       style={{
         boxShadow: '0px 10px 10px -5px rgba(0, 0, 0, 0.8)',
         borderBottom: '3px solid black',
@@ -256,7 +256,7 @@ const Agendar = () => {
     </button>
 
     <button 
-      className="w-[170px] h-[40px] cadastrar text-white text-xl font-bold  transition-colors rounded-[20px] flex justify-center items-center mb-2 md:mb-0" 
+      className="w-[170px] h-[40px] cadastrar text-white text-xl font-bold  transition-colors rounded-[20px] flex justify-center items-center mb-2 md:mb-0 font-latam" 
       style={{
         boxShadow: '0px 10px 10px -5px rgba(0, 0, 0, 0.8)',
         borderBottom: '3px solid black',

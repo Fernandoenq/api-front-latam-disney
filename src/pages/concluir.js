@@ -29,7 +29,7 @@ const Agendar = () => {
 
     if (storedUserId ) {
       setUserId(storedUserId); // Salva o OrganizerId no estado
-      console.log("esse e o id da pessoa logada", storedUserId)
+      // console.log("esse e o id da pessoa logada", storedUserId)
     } else {
       // Se os dados não existirem, redireciona para a tela de login ou dashboard
       navigate('/login');
@@ -83,9 +83,9 @@ const Agendar = () => {
       const response = await fetch(`${BASE_URL}/Scheduling/ConfirmPresence/${selectedSchedulingId}`, {
         method: 'PUT',
       });
-      console.log("chegou1");
+    
       if (response.ok) {
-        console.log("chegou2");
+        
         setShowConfirmationModal(true); // Mostra a modal de confirmação
   
         // Atualize o estado do schedulingData sem fazer um fetch novamente
@@ -107,7 +107,7 @@ const Agendar = () => {
         setMessage(`Erro no cadastro: ${errors}`); // Atualiza a mensagem com os erros recebidos
     }
       else {
-        alert('Erro ao reservar a cadeira. Tente novamente.');
+        setMessage(`Erro ao reservar a cadeira`); // Atualiza a mensagem com os erros recebidos
       }
     } catch (error) {
       console.error('Erro ao reservar cadeira:', error);
@@ -252,7 +252,7 @@ const Agendar = () => {
       {/* Alinhamento dos botões "Voltar" e "Confirmar" */}
   <div className="w-full sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-3/5  max-w-[1100px] flex justify-between mt-4">
     <button 
-      className="w-[170px] h-[40px] voltar text-white text-xl font-bold  transition-colors rounded-[20px] flex justify-center items-center mb-2 md:mb-0" 
+      className="w-[170px] h-[40px] voltar text-white text-xl font-bold  transition-colors rounded-[20px] flex justify-center items-center mb-2 md:mb-0 font-latam" 
       style={{
         boxShadow: '0px 10px 10px -5px rgba(0, 0, 0, 0.8)',
         borderBottom: '3px solid black',
@@ -263,7 +263,7 @@ const Agendar = () => {
     </button>
 
     <button 
-      className="w-[170px] h-[40px] cadastrar text-white text-xl font-bold  transition-colors rounded-[20px] flex justify-center items-center mb-2 md:mb-0" 
+      className="w-[170px] h-[40px] cadastrar text-white text-xl font-bold  transition-colors rounded-[20px] flex justify-center items-center mb-2 md:mb-0 font-latam" 
       style={{
         boxShadow: '0px 10px 10px -5px rgba(0, 0, 0, 0.8)',
         borderBottom: '3px solid black',

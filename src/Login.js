@@ -125,7 +125,7 @@ const Login = () => {
               value={login}
               onChange={(e) => setLogin(e.target.value)}
               style={{  backgroundColor: 'rgba(65, 105, 225, 0.3)', // Cor de fundo com opacidade (0.6, ajustável), 
-                height: '60px',  boxShadow: '0px 10px 10px -5px rgba(0, 0, 0, 0.8)',
+                height: '50px',  boxShadow: '0px 10px 10px -5px rgba(0, 0, 0, 0.8)',
                 borderBottom: '3px solid black',}}
               required
             />
@@ -147,7 +147,7 @@ const Login = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 style={{
                   backgroundColor: 'rgba(65, 105, 225, 0.3)', // Cor de fundo com opacidade
-                  height: '60px',
+                  height: '50px',
                   boxShadow: '0px 10px 10px -5px rgba(0, 0, 0, 0.8)',
                   borderBottom: '3px solid black',
                 }}

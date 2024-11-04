@@ -45,7 +45,7 @@ const Cadastro = () => {
   // Criar uma string ISO sem conversão de fuso horário
   const formattedDate = `${year}-${month}-${day}T${hour}:${minute}:${second}-03:00`; // UTC-3 para São Paulo
   
-  console.log(formattedDate);
+  // console.log(formattedDate);
   
 
   const countries = [
@@ -349,7 +349,7 @@ const Cadastro = () => {
 
   const handleCadastro = async (e) => {
     e.preventDefault();
-    console.log(selectedCountry);
+    // console.log(selectedCountry);
   const cleanedPhone = celular.replace(/\D/g, ''); // Remove tudo que não é dígito
 
     // Validar se o CPF é válido
@@ -357,10 +357,10 @@ const Cadastro = () => {
       setMessage("CPF inválido! Verifique o número e tente novamente.");
       return;
     }
-    console.log("esse e o pais",selectedCountry.label)
-    console.log("?",aceiteTermoLGPD)
-    console.log("?",aceiteOfertas)
-    console.log("cel",cleanedPhone)
+    // console.log("esse e o pais",selectedCountry.label)
+    // console.log("?",aceiteTermoLGPD)
+    // console.log("?",aceiteOfertas)
+    // console.log("cel",cleanedPhone)
    
 
     // Preparar os dados do cliente para o cadastro
@@ -375,7 +375,7 @@ const Cadastro = () => {
       HasAcceptedParticipation: aceiteTermoLGPD, // Use o estado do rádio
       HasAcceptedPromotion: aceiteOfertas // Use o estado do rádio
     };
-    console.log(clientData)
+    // console.log(clientData)
 
     try {
       // Verifica se o Termo LGPD foi aceito
@@ -403,7 +403,7 @@ const Cadastro = () => {
         setIsCadastroFeito(true);
         localStorage.setItem('cpf', cpf); // Armazenando o CPF no localStorage
         localStorage.setItem('personId', data.PersonId);
-        console.log(cpf);
+        // console.log(cpf);
        
       } else if (response.status === 422) {
         // Erro de validação (422 Unprocessable Entity) vindo do backend
@@ -477,7 +477,7 @@ const Cadastro = () => {
                       placeholder="nome completo"
                       className="w-full shadow-x8 pl-12 pr-4 py-2  text-white  rounded-[20px] cadastro-input"
                       style={{ backgroundColor: 'rgba(65, 105, 225, 0.3)', // Cor de fundo com opacidade (0.6, ajustável), 
-                        height: '60px',  boxShadow: '0px 10px 10px -5px rgba(0, 0, 0, 0.8)',
+                        height: '55px',  boxShadow: '0px 10px 10px -5px rgba(0, 0, 0, 0.8)',
                         borderBottom: '3px solid black' }}
                       value={name}
                       onChange={(e) => setName(e.target.value)}
@@ -490,7 +490,7 @@ const Cadastro = () => {
                       placeholder="email"
                       className="w-full shadow-x8 pl-12 pr-4 py-2  text-white  rounded-[20px] cadastro-input"
                       style={{ backgroundColor: 'rgba(65, 105, 225, 0.3)', // Cor de fundo com opacidade (0.6, ajustável), 
-                        height: '60px',  boxShadow: '0px 10px 10px -5px rgba(0, 0, 0, 0.8)',
+                        height: '55px',  boxShadow: '0px 10px 10px -5px rgba(0, 0, 0, 0.8)',
                         borderBottom: '3px solid black'}}
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
@@ -504,7 +504,7 @@ const Cadastro = () => {
                       placeholder="cpf"
                       className="w-full shadow-x8 pl-12 pr-4 py-2  text-white  rounded-[20px] cadastro-input"
                       style={{ backgroundColor: 'rgba(65, 105, 225, 0.3)', // Cor de fundo com opacidade (0.6, ajustável), 
-                        height: '60px',  boxShadow: '0px 10px 10px -5px rgba(0, 0, 0, 0.8)',
+                        height: '55px',  boxShadow: '0px 10px 10px -5px rgba(0, 0, 0, 0.8)',
                         borderBottom: '3px solid black'}}
                       value={cpf}
                       onChange={(e) => {
@@ -521,7 +521,7 @@ const Cadastro = () => {
                               className={`w-full shadow-x8 pl-12 pr-4 py-2 text-white rounded-[20px] cadastro-input ${error ? 'border-red-500' : ''}`}
                               style={{
                                 backgroundColor: 'rgba(65, 105, 225, 0.3)',
-                                height: '60px',
+                                height: '55px',
                                 boxShadow: '0px 10px 10px -5px rgba(0, 0, 0, 0.8)',
                                 borderBottom: '3px solid black'
                               }}
@@ -546,7 +546,7 @@ const Cadastro = () => {
                           control: (base) => ({
                             ...base,
                             width: '100%', // Garantindo que o controle ocupe toda a largura
-                            height: '60px', // Definindo a altura
+                            height: '55px', // Definindo a altura
                             backgroundColor: 'rgba(65, 105, 225, 0.3)', // Cor de fundo com opacidade
                             boxShadow: '0px 10px 10px -5px rgba(0, 0, 0, 0.8)', // Sombra
                             borderBottom: '3px solid black', // Borda inferior
@@ -608,7 +608,8 @@ const Cadastro = () => {
             <div className="flex flex-col md:flex-row justify-between items-center "> {/* flex-col para mobile e flex-row para telas médias em diante */}
                   <button
                     type="submit"
-                    className="w-[170px] h-[40px] cadastrar text-white text-xl font-bold  transition-colors rounded-[20px] flex justify-center items-center mb-2 md:mb-0" // mb-2 para espaçamento em mobile
+                    
+                    className="w-[170px] h-[30px] cadastrar text-white text-xl font-bold  transition-colors rounded-[20px] flex justify-center items-center mb-2 md:mb-0 font-latam" // mb-2 para espaçamento em mobile
                     style={{
                       boxShadow: '0px 10px 10px -5px rgba(0, 0, 0, 0.8)',
                       borderBottom: '3px solid black',
@@ -619,10 +620,12 @@ const Cadastro = () => {
 
                   <div className="flex justify-end"> {/* Mantém a flexibilidade para botões */}
                     <button
-                      className="w-[170px] h-[40px] voltar text-white text-xl font-bold  transition-colors rounded-[20px] flex justify-center items-center mr-2" // mr-2 para espaçamento entre os botões
+                    
+                      className="w-[170px] h-[30px] voltar text-white text-xl font-bold  transition-colors rounded-[20px] flex justify-center items-center mr-2 font-latam" // mr-2 para espaçamento entre os botões
                       style={{
                         boxShadow: '0px 10px 10px -5px rgba(0, 0, 0, 0.8)',
                         borderBottom: '3px solid black',
+                       
                       }}
                       onClick={() => navigate('/dashboard')}
                     >
@@ -632,7 +635,7 @@ const Cadastro = () => {
                     {/* Exibir após o cadastro */}
                     {isCadastroFeito && (
                     <button
-                      className="agendar w-[170px] h-[40px] voltar text-white text-xl font-bold  transition-colors rounded-[20px] flex justify-center items-center"
+                      className="agendar w-[170px] h-[40px] voltar text-white text-xl font-bold  transition-colors rounded-[20px] flex justify-center items-center font-latam"
                       style={{
                         boxShadow: '0px 10px 10px -5px rgba(0, 0, 0, 0.8)',
                         borderBottom: '3px solid black',
