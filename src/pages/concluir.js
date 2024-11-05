@@ -100,7 +100,7 @@ const Agendar = () => {
         // Fecha automaticamente a modal de confirmação após 3 segundos
         setTimeout(() => {
           setShowConfirmationModal(false);
-        }, 3000);
+        }, 1000);
       } else if (response.status === 422) {
         const data = await response.json(); // Adicione esta linha para capturar a resposta JSON
         const errors = data.Errors ? data.Errors.join(', ') : 'Erro desconhecido';
@@ -197,7 +197,7 @@ const Agendar = () => {
           {showConfirmationModal && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 font-latam">
             <div className="bg-white p-4 rounded-md shadow-lg text-center font-latam">
-              <p className="text-lg font-semibold mb-2 font-latam">Cadeira reservada com sucesso!</p>
+              <p className="text-lg font-semibold mb-2 font-latam">Poltrona reservada com sucesso!</p>
               <p className="text-gray-500 font-latam">Sua reserva foi confirmada.</p>
             </div>
           </div>
@@ -239,7 +239,7 @@ const Agendar = () => {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="3" className="text-center px-4 py-2 text-gray-500">Nenhuma cadeira disponível.</td>
+                  <td colSpan="3" className="text-center px-4 py-2 text-gray-500">Nenhuma poltrona disponível.</td>
                 </tr>
               )}
             </tbody>
@@ -300,7 +300,7 @@ const Agendar = () => {
           <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm font-latam">
             <h2 className="text-xl font-semibold text-center mb-4 font-latam">Confirmar Agendamento</h2>
             <p className="text-center mb-4 font-latam">
-              Tem certeza que deseja <strong>confirmar</strong> o horário da cadeira <strong>{selectedChair}</strong> do horário <strong>{new Date(selectedTurnTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</strong>?
+              Tem certeza que deseja <strong>confirmar</strong> o horário da poltrona <strong>{selectedChair}</strong> do horário <strong>{new Date(selectedTurnTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</strong>?
             </p>
             {/* Flex para os botões */}
             <div className="flex justify-between space-x-4">

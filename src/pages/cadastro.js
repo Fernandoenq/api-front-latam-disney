@@ -332,20 +332,11 @@ const Cadastro = () => {
     return cpfDigits.length === 11; // Verifica se tem 11 dígitos
   };
 
-  const validatePhoneNumber = (value) => {
-    // Validação para o Brasil
-    const brasilPhonePattern = /^\(\d{2}\) \d{5}-\d{4}$/; // Formato: (99) 99999-9999
-    if (selectedCountry.value === 'BR' && !brasilPhonePattern.test(value)) {
-      setError('Número de telefone inválido. Exemplo: (99) 99999-9999');
-      return false;
-    }
-    setError('');
-    return true;
-  };
+  
   const handlePhoneChange = (e) => {
-    const value = e.target.value;
-    setCelular(value);
-    validatePhoneNumber(value);
+    setCelular(e.target.value);
+    if (error) setError(''); // Limpa o erro enquanto o usuário está digitando
+    
   };
 
   const handleCadastro = async (e) => {
@@ -441,7 +432,14 @@ const Cadastro = () => {
      setAceiteOfertas(prev => !prev);
   };
 
-
+  const handleBlur = () => {
+    // Valida o número de telefone apenas quando o usuário termina de digitar
+    if (selectedCountry.value === 'BR' && celular.replace(/[^0-9]/g, '').length < 11) {
+      setError('Número de telefone inválido. Exemplo: (99) 99999-9999');
+    } else {
+      setError('');
+    }
+  };
  
 
   return (
@@ -529,6 +527,7 @@ const Cadastro = () => {
                               }}
                               value={celular}
                               onChange={handlePhoneChange}
+                              onBlur={handleBlur} // Validação ao sair do campo
                               required
                             />
                             {error && <p className="text-red-500">{error}</p>} {/* Mensagem de erro */}

@@ -9,11 +9,7 @@ body {
     padding: 0 00px; /* Adiciona espaçamento interno */
   
 }
- /* Desativa a rolagem na página */
- html, body {
-  overflow: hidden !important;
-  height: 100% ;
-}
+
 
 @font-face {
   font-family: 'Latam Sans Hairline';
@@ -151,7 +147,14 @@ code {
   .card-dashboard{
     height: 230px !important;
   }
-  
+  html, body {
+    overflow: hidden !important;
+    height: 100% ;
+  }
+  /* Garante que nenhum elemento dentro do body cause overflow */
+  * {
+    box-sizing: border-box;
+  }
 }
 
 

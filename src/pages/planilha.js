@@ -77,9 +77,9 @@ const Planilha = () => {
       >
         <table className="w-full border border-gray-300">
           <thead style={{ backgroundColor: '#1e3a8a' }}>
-            <tr className="text-white uppercase text-sm leading-normal">
+            <tr className="text-white uppercase text-sm leading-normal font-latam">
               <th className="py-3 px-6 text-left">Horário</th>
-              <th className="py-3 px-6 text-left">Cadeira</th>
+              <th className="py-3 px-6 text-left">Poltrona</th>
               <th className="py-3 px-6 text-left">Nome</th>
               <th className="py-3 px-6 text-left">CPF</th>
               <th className="py-3 px-6 text-center">Status</th>

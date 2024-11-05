@@ -87,7 +87,7 @@ const Agendamento = () => {
    border: '0.4px solid black',
  }}
 >
-  <p className="px-4 py-2 text-center text-white text-lg ">Agendamento de Cadeiras - CPF: {cpf}</p>
+  <p className="px-4 py-2 text-center text-white text-lg ">Agendamento de Poltronas - CPF: {cpf}</p>
 
 
   <div style={{ maxHeight: '220px', overflowY: 'auto' }} className="horarios">
@@ -113,7 +113,7 @@ const Agendamento = () => {
           ))
         ) : (
           <tr>
-            <td colSpan="2" className="text-center px-4 py-2 text-gray-500">Nenhuma cadeira disponível.</td>
+            <td colSpan="2" className="text-center px-4 py-2 text-gray-500">Nenhuma poltrona disponível.</td>
           </tr>
         )}
       </tbody>

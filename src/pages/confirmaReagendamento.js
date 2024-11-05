@@ -154,7 +154,7 @@ const Reagendamento = () => {
         setTimeout(() => {
           setShowConfirmationModal(false);
           navigate('/agendamento');
-        }, 3000);
+        }, 1000);
       } else {
         // alert('Erro ao reservar a cadeira. Tente novamente.');
       }
@@ -215,7 +215,7 @@ const Reagendamento = () => {
         {showConfirmationModal && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 font-latam">
             <div className="bg-white p-4 rounded-md shadow-lg text-center font-latam">
-              <p className="text-lg font-semibold mb-2 font-latam">Cadeira reservada com sucesso!</p>
+              <p className="text-lg font-semibold mb-2 font-latam">Poltrona reservada com sucesso!</p>
               <p className="text-gray-500 font-latam">Sua reserva foi confirmada.</p>
             </div>
           </div>
@@ -253,7 +253,7 @@ const Reagendamento = () => {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="3" className="text-center px-4 py-2 text-gray-500">Nenhuma cadeira disponível.</td>
+                  <td colSpan="3" className="text-center px-4 py-2 text-gray-500">Nenhuma poltrona disponível.</td>
                 </tr>
               )}
             </tbody>
@@ -267,7 +267,7 @@ const Reagendamento = () => {
           <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm font-latam">
             <h2 className="text-xl font-semibold text-center mb-4">Confirmar Agendamento</h2>
             <p className="text-center mb-4 font-latam">
-              Tem certeza que deseja <strong>reagendar</strong> o CPF <strong>{cpf}</strong> na cadeira {selectedChair} das {new Date(selectedTurnTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}?
+              Tem certeza que deseja <strong>reagendar</strong> o CPF <strong>{cpf}</strong> na poltrona {selectedChair} das {new Date(selectedTurnTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}?
             </p>
             <div className="flex justify-between">
               <button className="bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400 font-latam" onClick={closeModal}>
