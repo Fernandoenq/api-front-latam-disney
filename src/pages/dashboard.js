@@ -90,11 +90,14 @@ const Dashboard = () => {
         {/* Card de Cadastro */}
         <div 
           onClick={handleCadastroClick}
-          className="p-6 rounded-lg shadow-md w-full sm:max-w-xs flex flex-col items-center justify-center card-dashboard"
-          style={{ backgroundColor: 'rgba(65, 105, 225, 0.3)', height: '250px', maxWidth: '300px', boxShadow: '10px 30px 10px -5px rgba(0.3, 0.3, 0.3, 0.3)' }}
+          className="p-6 rounded-lg shadow-md w-full sm:max-w-xs flex flex-col items-center justify-center  card-dashboard"
+          style={{ backgroundColor: 'rgba(65, 105, 225, 0.3)', border:' 1px solid red',
+            height: '250px', maxWidth: '300px', boxShadow: '10px 30px 10px -5px rgba(0.3, 0.3, 0.3, 0.3)' }}
         >
-          <img src="cadastro.png" alt="Ícone de Cadastro" className="w-50 h-50 sm:w-50 sm:h-50" />
-          <h2 className="text-base sm:text-lg text-white font-semibold text-center mb-10">cadastro</h2>
+          <img src="cadastro.png" alt="Ícone de Cadastro" className="w-50 h-50 sm:w-50 sm:h-50 " />
+          <p className="text-base sm:text-lg text-white font-semibold text-center " 
+           style={{border:' 1px solid red' }}
+          >cadastro</p>
         </div> 
 
         {/* Card de Agendamento */}
@@ -104,7 +107,7 @@ const Dashboard = () => {
           style={{ backgroundColor: 'rgba(65, 105, 225, 0.3)', height: '250px', maxWidth: '300px' , boxShadow: '10px 30px 10px -5px rgba(0.3, 0.3, 0.3, 0.3)', }}
         >
           <img src="agendamento.png" alt="Ícone de Agendamento" className="w-50 h-50 sm:w-50 sm:h-50" />
-          <h2 className="text-base sm:text-lg text-white font-semibold text-center mb-10">agendamento</h2>
+          <h2 className="text-base sm:text-lg text-white font-semibold text-center " >agendamento</h2>
         </div>
 
         {/* Card de Confirmar Presença */}
@@ -114,7 +117,7 @@ const Dashboard = () => {
           style={{ backgroundColor: 'rgba(65, 105, 225, 0.3)', height: '250px', maxWidth: '300px' ,boxShadow: '10px 30px 10px -5px rgba(0.3, 0.3, 0.3, 0.3)' }}
         >
           <img src="presenca.png" alt="Ícone de Confirmar Presença" className="w-50 h-50 sm:w-50 sm:h-50" />
-          <h2 className="text-base sm:text-lg text-white font-semibold text-center mb-10">confirmar presença</h2>
+          <h2 className="text-base sm:text-lg text-white font-semibold text-center ">confirmar presença</h2>
         </div>
       </div>
 

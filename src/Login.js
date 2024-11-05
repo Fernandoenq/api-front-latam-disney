@@ -94,7 +94,7 @@ const Login = () => {
 
         {message && (
           <div
-            className={`p-4 mb-4 text-sm rounded-lg ${isSuccess ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}
+            className={`p-4 mb-4 text-sm rounded-lg ${isSuccess ? 'bg-blue-500 text-white' : 'bg-red-500 text-white'}`}
             role="alert"
           >
             {message}
@@ -159,7 +159,7 @@ const Login = () => {
           <div className="relative responsive-width">
             <button
               type="submit"
-              className="w-full bg-blue-500 text-white py-2 hover:bg-blue-600 transition-colors rounded-[20px] flex justify-center items-center"
+              className="w-full bg-blue-500 text-white py-2 hover:bg-blue-600 transition-colors rounded-[20px] flex justify-center items-center font-latam"
               style={{backgroundColor: 'rgba(65, 105, 225, 0.3)',
                  height: '50px',boxShadow: '0px 10px 10px -5px rgba(0, 0, 0, 0.8)',
                 borderBottom: '3px solid black', }}

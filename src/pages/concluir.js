@@ -195,10 +195,10 @@ const Agendar = () => {
 
           {/* Modal de confirmação */}
           {showConfirmationModal && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white p-4 rounded-md shadow-lg text-center">
-              <p className="text-lg font-semibold mb-2">Cadeira reservada com sucesso!</p>
-              <p className="text-gray-500">Sua reserva foi confirmada.</p>
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 font-latam">
+            <div className="bg-white p-4 rounded-md shadow-lg text-center font-latam">
+              <p className="text-lg font-semibold mb-2 font-latam">Cadeira reservada com sucesso!</p>
+              <p className="text-gray-500 font-latam">Sua reserva foi confirmada.</p>
             </div>
           </div>
         )}
@@ -296,22 +296,22 @@ const Agendar = () => {
 
       {/* Modal de confirmação */}
       {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm">
-            <h2 className="text-xl font-semibold text-center mb-4">Confirmar Agendamento</h2>
-            <p className="text-center mb-4">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 font-latam">
+          <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm font-latam">
+            <h2 className="text-xl font-semibold text-center mb-4 font-latam">Confirmar Agendamento</h2>
+            <p className="text-center mb-4 font-latam">
               Tem certeza que deseja <strong>confirmar</strong> o horário da cadeira <strong>{selectedChair}</strong> do horário <strong>{new Date(selectedTurnTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</strong>?
             </p>
             {/* Flex para os botões */}
             <div className="flex justify-between space-x-4">
               <button
-                className="w-1/2 bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition-colors"
+                className="w-1/2 bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition-colors font-latam"
                 onClick={closeModal}
               >
                 Fechar
               </button>
               <button
-                className="w-1/2 bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition-colors"
+                className="w-1/2 bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition-colors font-latam"
                 onClick={handleConfirmConclusion}
               >
                 Confirmar

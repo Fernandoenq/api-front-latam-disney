@@ -192,10 +192,10 @@ const Agendar = () => {
     <p className="px-4 py-2 text-center text-white text-lg aumentando-horarios">Horários</p>
     
     {showConfirmationModal && (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div className="bg-white p-4 rounded-md shadow-lg text-center">
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 font-latam">
+        <div className="bg-white p-4 rounded-md shadow-lg text-center font-latam">
           <p className="text-lg font-semibold mb-2">Cadeira reservada com sucesso!</p>
-          <p className="text-gray-500">Sua reserva foi confirmada.</p>
+          <p className="text-gray-500 font-latam">Sua reserva foi confirmada.</p>
         </div>
       </div>
     )}
@@ -207,7 +207,7 @@ const Agendar = () => {
       {schedulingData.length > 0 ? (
         schedulingData.map((item, index) => (
           <tr key={index} className="border-b border-dotted">
-            <td className="px-2 py-1 text-center  md:text-6xl horarios-cadeiras">
+            <td className="px-2 py-1 text-center  md:text-6xl horarios-cadeiras font-latam">
               {new Date(item.TurnTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
             </td>
             <td className="px-1 py-1 text-center">
@@ -295,15 +295,15 @@ const Agendar = () => {
   {isModalOpen && (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
       <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm">
-        <h2 className="text-xl font-semibold text-center mb-4">Confirmar Agendamento</h2>
-        <p className="text-center mb-4">
+        <h2 className="text-xl  text-center mb-4 font-latam">Confirmar Agendamento</h2>
+        <p className="text-center mb-4 font-latam">
           Tem certeza que deseja cadastrar o CPF <strong>{cpf}</strong> na cadeira {selectedChair} das {new Date(selectedTurnTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}?
         </p>
         <div className="flex justify-between">
-          <button className="bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400" onClick={closeModal}>
+          <button className="bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400 font-latam" onClick={closeModal}>
             Cancelar
           </button>
-          <button className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600" onClick={handleConfirmReservation}>
+          <button className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 font-latam" onClick={handleConfirmReservation}>
             Confirmar
           </button>
         </div>

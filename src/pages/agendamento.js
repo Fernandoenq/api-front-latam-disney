@@ -106,7 +106,7 @@ const Agendamento = () => {
               onClick={() => handleSelectScheduling(item.SchedulingId)}
               style={{ cursor: 'pointer' }}
             >
-              <td className="px-2 py-1 text-center  md:text-6xl horarios-cadeiras">
+              <td className="px-2 py-1 text-center  md:text-6xl horarios-cadeiras font-latam">
                 {new Date(item.TurnTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
               </td>
             </tr>

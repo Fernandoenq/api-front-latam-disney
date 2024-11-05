@@ -111,6 +111,7 @@ code {
     .left{
     margin-left: 100px;
     }
+    
 }
 
 /* 1440x900 */
@@ -127,6 +128,8 @@ code {
     }
 }
 
+
+/* tablet modelo */
 @media (min-width: 1300px) and (max-width: 1340px) and (min-height: 750px) and (max-height: 820px) {
   .tabletModelo-assinatura-login{
     transform: translateY(5.1rem);
@@ -140,6 +143,10 @@ code {
     height: 20vh !important;
     width: 30vh !important;
   }
+  .card-dashboard{
+    height: 230px !important;
+  }
+  
 }
 
 
@@ -457,4 +464,7 @@ input:focus {
 .horarios{
   padding-right:100px;
   padding-left:100px
+}
+.text-base{
+margin-bottom: 50px;
 }

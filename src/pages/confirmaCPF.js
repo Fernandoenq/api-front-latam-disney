@@ -136,18 +136,18 @@ const CPF = () => {
 
       {/* Modal de confirmação */}
       {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm">
-            <h2 className="text-xl font-semibold text-center mb-4">Esse CPF não foi cadastrado</h2>
-            <div className="flex justify-between space-x-4">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 font-latam">
+          <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm font-latam">
+            <h2 className="text-xl  text-center mb-4 font-latam">Esse CPF não foi cadastrado</h2>
+            <div className="flex justify-between space-x-4 font-latam">
               <button
-                className="w-1/2 bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition-colors"
+                className="w-1/2 bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition-colors font-latam"
                 onClick={closeModal}
               >
                 Fechar
               </button>
               <button
-                className="w-1/2 bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition-colors"
+                className="w-1/2 bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition-colors font-latam"
                 onClick={() => navigate('/cadastro')}
               >
                 Cadastrar

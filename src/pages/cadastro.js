@@ -682,9 +682,9 @@ const Cadastro = () => {
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm">
-            <h2 className="text-xl font-semibold text-center mb-4">Cadastro realizado com sucesso!</h2>
+            <h2 className="text-xl  text-center mb-4 font-latam">Cadastro realizado com sucesso!</h2>
             <button
-              className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition-colors"
+              className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition-colors font-latam"
               onClick={closeModal}
             >
               Fechar
