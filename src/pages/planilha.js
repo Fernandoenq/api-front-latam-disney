@@ -48,7 +48,9 @@ const Planilha = () => {
   };
 
   return (
+    
     <div
+    className="flex flex-col min-h-screen items-center justify-center" 
       style={{
         backgroundImage: `url('/fundomenu.png')`,
         backgroundSize: 'cover',

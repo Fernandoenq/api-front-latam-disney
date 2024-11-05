@@ -79,7 +79,7 @@ const CPF = () => {
           <div>
             <input
               type="text"
-              placeholder="cpf"
+              placeholder="CPF"
               className="w-full shadow-x8 pl-12 pr-4 py-2  text-white  rounded-[20px] cadastro-input"
               style={{ backgroundColor: 'rgba(65, 105, 225, 0.3)', // Cor de fundo com opacidade (0.6, ajustável), 
                 height: '60px',  boxShadow: '0px 10px 10px -5px rgba(0, 0, 0, 0.8)',
@@ -95,7 +95,7 @@ const CPF = () => {
 
            <button
              type="button"
-             className="w-[170px] h-[40px] voltar text-white text-xl font-bold hover:bg-blue-600 transition-colors rounded-[20px] flex justify-center items-center font-latam"
+             className="w-[170px] h-[40px] voltar text-white text-xl font-bold  transition-colors rounded-[20px] flex justify-center items-center font-latam"
              style={{
                boxShadow: '0px 10px 10px -5px rgba(0, 0, 0, 0.8)',
                borderBottom: '3px solid black',
@@ -107,7 +107,7 @@ const CPF = () => {
 
            <button
              type="submit"
-             className="w-[170px] h-[40px] cadastrar text-white text-xl font-bold hover:bg-blue-600 transition-colors rounded-[20px] flex justify-center items-center font-latam"
+             className="w-[170px] h-[40px] cadastrar text-white text-xl font-bold  transition-colors rounded-[20px] flex justify-center items-center font-latam"
              style={{
                boxShadow: '0px 10px 10px -5px rgba(0, 0, 0, 0.8)',
                borderBottom: '3px solid black',

@@ -208,7 +208,8 @@ const Agendar = () => {
         schedulingData.map((item, index) => (
           <tr key={index} className="border-b border-dotted">
             <td className="px-2 py-1 text-center  md:text-6xl horarios-cadeiras font-latam">
-              {new Date(item.TurnTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+            {new Date(item.TurnTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}
+
             </td>
             <td className="px-1 py-1 text-center">
               <button

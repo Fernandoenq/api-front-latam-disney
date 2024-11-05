@@ -14,6 +14,7 @@ const Cadastro = () => {
   
   const [isModalOpen, setIsModalOpen] = useState(false); //para abreir a modal
   const [isCadastroFeito, setIsCadastroFeito] = useState(false); // Estado para controlar se o cadastro foi feito
+  const [isCadastro, setIsCadastro] = useState(true); // Estado para controlar se o cadastro foi feito
   
   const [message, setMessage] = useState(''); // Estado para a mensagem de erro ou sucesso
   const [isSuccess, setIsSuccess] = useState(false); // Para saber se foi sucesso ou erro
@@ -401,6 +402,7 @@ const Cadastro = () => {
         setMessage("Cadastro realizado com sucesso!");
         setIsModalOpen(true);
         setIsCadastroFeito(true);
+        setIsCadastro(false);
         localStorage.setItem('cpf', cpf); // Armazenando o CPF no localStorage
         localStorage.setItem('personId', data.PersonId);
         // console.log(cpf);
@@ -444,7 +446,7 @@ const Cadastro = () => {
 
   return (
     <div className="flex flex-col min-h-screen items-center justify-center" 
-    style={{ backgroundImage: `url('/fundomenu.png')`, backgroundSize: 'cover' }}>
+    style={{ backgroundImage: `url('/novomenu.png')`, backgroundSize: 'cover' }}>
       
        <div
           className="img tabletModelo-destino"
@@ -454,7 +456,7 @@ const Cadastro = () => {
             backgroundImage: 'url(destinos.png)',
             backgroundSize: 'cover', 
             backgroundPosition: 'center',
-            marginTop:'100px'
+            marginTop:'5px'
             // border:'solid yellow 1px'
           }}
         ></div>
@@ -474,7 +476,7 @@ const Cadastro = () => {
                   <div >
                     <input
                       type="name"
-                      placeholder="nome completo"
+                      placeholder="Nome Completo"
                       className="w-full shadow-x8 pl-12 pr-4 py-2  text-white  rounded-[20px] cadastro-input"
                       style={{ backgroundColor: 'rgba(65, 105, 225, 0.3)', // Cor de fundo com opacidade (0.6, ajustável), 
                         height: '55px',  boxShadow: '0px 10px 10px -5px rgba(0, 0, 0, 0.8)',
@@ -487,7 +489,7 @@ const Cadastro = () => {
                   <div>
                     <input
                       type="email"
-                      placeholder="email"
+                      placeholder="Email"
                       className="w-full shadow-x8 pl-12 pr-4 py-2  text-white  rounded-[20px] cadastro-input"
                       style={{ backgroundColor: 'rgba(65, 105, 225, 0.3)', // Cor de fundo com opacidade (0.6, ajustável), 
                         height: '55px',  boxShadow: '0px 10px 10px -5px rgba(0, 0, 0, 0.8)',
@@ -501,7 +503,7 @@ const Cadastro = () => {
                   <div>
                     <input
                       type="cpf"
-                      placeholder="cpf"
+                      placeholder="CPF"
                       className="w-full shadow-x8 pl-12 pr-4 py-2  text-white  rounded-[20px] cadastro-input"
                       style={{ backgroundColor: 'rgba(65, 105, 225, 0.3)', // Cor de fundo com opacidade (0.6, ajustável), 
                         height: '55px',  boxShadow: '0px 10px 10px -5px rgba(0, 0, 0, 0.8)',
@@ -517,7 +519,7 @@ const Cadastro = () => {
                   <div>
                       <InputMask
                               mask={selectedCountry.value === 'BR' ? '(99) 99999-9999' : ''}
-                              placeholder="celular/whatsApp"
+                              placeholder="Celular/WhatsApp"
                               className={`w-full shadow-x8 pl-12 pr-4 py-2 text-white rounded-[20px] cadastro-input ${error ? 'border-red-500' : ''}`}
                               style={{
                                 backgroundColor: 'rgba(65, 105, 225, 0.3)',
@@ -606,18 +608,20 @@ const Cadastro = () => {
 
 
             <div className="flex flex-col md:flex-row justify-between items-center "> {/* flex-col para mobile e flex-row para telas médias em diante */}
-                  <button
-                    type="submit"
-                    
-                    className="w-[170px] h-[30px] cadastrar text-white text-xl font-bold  transition-colors rounded-[20px] flex justify-center items-center mb-2 md:mb-0 font-latam" // mb-2 para espaçamento em mobile
-                    style={{
-                      boxShadow: '0px 10px 10px -5px rgba(0, 0, 0, 0.8)',
-                      borderBottom: '3px solid black',
-                    }}
-                  >
-                    Cadastrar
-                  </button>
-
+                   {/* Condicional para o botão de cadastro */}
+              {isCadastro && (
+                      <button
+                        type="submit"
+                        
+                        className="w-[170px] h-[30px] cadastrar text-white text-xl font-bold  transition-colors rounded-[20px] flex justify-center items-center mb-2 md:mb-0 font-latam" // mb-2 para espaçamento em mobile
+                        style={{
+                          boxShadow: '0px 10px 10px -5px rgba(0, 0, 0, 0.8)',
+                          borderBottom: '3px solid black',
+                        }}
+                      >
+                        Cadastrar
+                      </button>
+                  )}
                   <div className="flex justify-end"> {/* Mantém a flexibilidade para botões */}
                     <button
                     

@@ -214,7 +214,7 @@ const Agendar = () => {
               {schedulingData.length > 0 ? (
                 schedulingData.map((item, index) => (
                   <tr key={index} className="border-b border-dotted">
-                    <td className="px-2 py-1 text-center  md:text-6xl horarios-cadeiras">
+                    <td className="px-2 py-1 text-center  md:text-6xl horarios-cadeiras font-latam">
                       {new Date(item.TurnTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </td>
                     <td className="px-2 py-1  md:text-6xl horarios-cadeiras">
@@ -226,7 +226,7 @@ const Agendar = () => {
                         <FontAwesomeIcon icon={faChair} /> 
                       </button>
                     </td>
-                    <td className="px-2 py-1  md:text-6xl horarios-cadeiras">
+                    <td className="px-2 py-1  md:text-6xl horarios-cadeiras ">
                       <button
                         className={getChairButtonClass(item.chair2, item.schedulingId2, 2)}
                         onClick={() => handleChairSelection(item.schedulingId2, 2, item.chair2, item.TurnTime)}
