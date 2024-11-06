@@ -9,6 +9,9 @@ body {
     padding: 0 00px; /* Adiciona espaçamento interno */
   
 }
+.geral-cadastro{
+  margin-top: 20px !important;
+}
 
 
 @font-face {
@@ -131,7 +134,12 @@ code {
 
 
 /* tablet modelo */
-@media (min-width: 1300px) and (max-width: 1340px) and (min-height: 750px) and (max-height: 820px) {
+@media (min-width: 1280px) and (max-width: 1340px) and (min-height: 750px) and (max-height: 820px) {
+  .body-cad{
+    border:solid 1px red;
+    overflow: hidden; /* Remove o scroll da página */
+    height: 800px; /* Ocupa 100% da altura da viewport */
+  }
   .tabletModelo-assinatura-login{
     transform: translateY(5.1rem);
     margin-top:0px !important;
@@ -139,22 +147,38 @@ code {
     width: 30vh !important;
   }
   .tabletModelo-assinatura{
-   
-    margin-top:0px !important;
-    height: 20vh !important;
+    margin-top:10px !important;
+    height: 8vh !important;
     width: 30vh !important;
+    border:solid 1px red;
+    
   }
   .card-dashboard{
     height: 230px !important;
   }
-  html, body {
-    overflow: hidden !important;
-    height: 100% ;
-  }
+
   /* Garante que nenhum elemento dentro do body cause overflow */
   * {
     box-sizing: border-box;
   }
+  .tabletModelo-destino{
+    margin-top: 20px !important;
+    height: 17vh !important;
+    
+  }
+  
+  .geral-cadastro{
+    margin-top: 40px !important;
+  }
+  .tabletModelo-agendar{
+    margin-top: 0px !important;
+    margin-bottom: 10px !important;
+    height: 17vh !important;
+  }
+
+
+  
+  
 }
 
 
@@ -356,10 +380,10 @@ code {
   }
 }
 
-@media (max-width: 1280px) {
+/* @media (max-width: 1280px) {
   .responsive-width {
     width: 100%; /* Ajusta para 100% em telas pequenas */
-  }
+  /* }
   .assinatura{
     transform: translateY(5.1rem);
   }
@@ -367,8 +391,8 @@ code {
     width: 220px;
     height: 100px;
    
-  }
-}
+  } */
+/* }  */
 
 
 /* imagem 1920x1200 */

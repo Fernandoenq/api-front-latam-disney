@@ -168,11 +168,11 @@ const Agendar = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen items-center justify-center celular-agendar"
+    <div className="flex flex-col min-h-screen items-center justify-center celular-agendar body-cad"
     style={{ backgroundImage: `url('/fundomenu.png')`, backgroundSize: 'cover' }}>
 
 <div
-          className="img tabletModelo-destino"
+          className="img tabletModelo-destino tabletModelo-agendar"
           style={{
             height: '28vh',
             width: '90vw',
@@ -206,7 +206,7 @@ const Agendar = () => {
 
 <p className="px-4 py-2 text-center text-white text-lg aumentando-horarios">Concluir horários</p>
 
-        <div style={{ maxHeight: '220px', overflowY: 'auto' }} className="horarios">
+        <div style={{ maxHeight: '180px', overflowY: 'auto' }} className="horarios">
               {/* Tabela de agendamentos */}
               <table className="table-auto w-full shadow-md text-white rounded-md text-sm md:text-lg"  style={{ overflowX: 'auto' }}>
           

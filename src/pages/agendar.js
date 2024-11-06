@@ -163,19 +163,19 @@ const Agendar = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen items-center justify-center celular-agendar" style={{ backgroundImage: `url('/fundomenu.png')`, backgroundSize: 'cover' }}>
+    <div className="flex flex-col min-h-screen items-center justify-center celular-agendar body-cad" style={{ backgroundImage: `url('/fundomenu.png')`, backgroundSize: 'cover' }}>
   
   
   <div
-          className="img tabletModelo-destino"
+          className="img tabletModelo-destino tabletModelo-agendar"
           style={{
             height: '28vh',
             width: '90vw',
             backgroundImage: 'url(destinos.png)',
             backgroundSize: 'cover', 
             backgroundPosition: 'center',
-            marginTop:'10px'
-            // border:'solid yellow 1px'
+            marginTop:'10px',
+            border:'solid yellow 1px'
           }}
         ></div>
 
@@ -189,7 +189,7 @@ const Agendar = () => {
       border: '0.4px solid black',
     }}
   >
-    <p className="px-4 py-2 text-center text-white text-lg aumentando-horarios">Horários</p>
+    <p className="px-4 py-2 text-center text-white text-lg aumentando-horarios ">Horários</p>
     
     {showConfirmationModal && (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 font-latam">
@@ -201,17 +201,17 @@ const Agendar = () => {
     )}
 
 
-<div style={{ maxHeight: '220px', overflowY: 'auto' }} className="horarios">
+<div style={{ maxHeight: '180px', overflowY: 'auto' }} className="horarios">
   <table className="table-auto w-full shadow-md text-white rounded-md text-sm md:text-lg" style={{ overflowX: 'auto' }}>
     <tbody>
       {schedulingData.length > 0 ? (
         schedulingData.map((item, index) => (
           <tr key={index} className="border-b border-dotted">
-            <td className="px-2 py-1 text-center  md:text-6xl horarios-cadeiras font-latam">
+            <td className="px-2 py-1 text-center  md:text-6xl horarios-cadeiras font-latam numeros">
             {new Date(item.TurnTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}
 
             </td>
-            <td className="px-1 py-1 text-center">
+            <td className="px-1 py-1 text-center ">
               <button
                 className={getChairButtonClass(item.chair1, item.schedulingId1, 1)}
                 onClick={() => handleChairSelection(item.schedulingId1, 1, item.chair1, item.TurnTime)}

@@ -43,8 +43,16 @@ const Planilha = () => {
   };
 
   const formatCPF = (cpf) => {
-    if (!cpf) return '';
+    if (!cpf) return '-';
     return cpf.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})$/, "$1.$2.$3-$4");
+  };
+  const formatPersonName = (PersonName) => {
+    if (!PersonName) return '-';
+    return PersonName.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})$/, "$1.$2.$3-$4");
+  };
+  const formatData = (SchedulingDate) => {
+    if (!SchedulingDate) return '-';
+    return SchedulingDate.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})$/, "$1.$2.$3-$4");
   };
 
   return (
@@ -91,7 +99,7 @@ const Planilha = () => {
               <tr key={index} className="border-b border-gray-300 hover:bg-blue-200">
                 <td className="py-3 px-6 text-left whitespace-nowrap">{item.TurnTime}</td>
                 <td className="py-3 px-6 text-left">{item.ChairName}</td>
-                <td className="py-3 px-6 text-left">{item.PersonName}</td>
+                <td className="py-3 px-6 text-left">{formatPersonName(item.PersonName)}</td>
                 <td className="py-3 px-6 text-left">{formatCPF(item.Cpf)}</td>
                 <td className="py-3 px-6 text-center">
                   <span
@@ -106,7 +114,7 @@ const Planilha = () => {
                     {getStatusLabel(item.SchedulingStatus)}
                   </span>
                 </td>
-                <td className="py-3 px-6 text-center">{item.SchedulingDate}</td>
+                <td className="py-3 px-6 text-center">{formatData(item.SchedulingDate)}</td>
               </tr>
             ))}
           </tbody>

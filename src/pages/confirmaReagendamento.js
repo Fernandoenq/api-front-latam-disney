@@ -190,9 +190,9 @@ const Reagendamento = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen items-center justify-center celular-agendar" style={{ backgroundImage: `url('/fundomenu.png')`, backgroundSize: 'cover' }}>
+    <div className="flex flex-col min-h-screen items-center justify-center celular-agendar body-cad" style={{ backgroundImage: `url('/fundomenu.png')`, backgroundSize: 'cover' }}>
      <div
-          className="img tabletModelo-destino"
+          className="img tabletModelo-destino tabletModelo-agendar"
           style={{
             height: '28vh',
             width: '90vw',
@@ -222,13 +222,13 @@ const Reagendamento = () => {
         )}
 
 
-        <div style={{ maxHeight: '220px', overflowY: 'auto' }} className="horarios">
+        <div style={{ maxHeight: '180px', overflowY: 'auto' }} className="horarios">
           <table className="table-auto w-full shadow-md text-white rounded-md text-sm md:text-lg" style={{ overflowX: 'auto' }}>
             <tbody>
               {schedulingData.length > 0 ? (
                 schedulingData.map((item, index) => (
                   <tr key={index} className="border-b border-dotted">
-                    <td className="px-2 py-1 text-center  md:text-6xl horarios-cadeiras">
+                    <td className="px-2 py-1 text-center  md:text-6xl horarios-cadeiras font-latam">
                       {new Date(item.TurnTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </td>
                     <td className="px-2 py-1  md:text-6xl horarios-cadeiras">

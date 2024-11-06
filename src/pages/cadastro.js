@@ -443,24 +443,28 @@ const Cadastro = () => {
  
 
   return (
-    <div className="flex flex-col min-h-screen items-center justify-center" 
-    style={{ backgroundImage: `url('/novomenu.png')`, backgroundSize: 'cover' }}>
+    <div className="flex flex-col min-h-screen items-center body-cad" 
+    style={{ backgroundImage: `url('/novomenu.png')`, backgroundSize: 'cover',
+    // border: 'solid red 1px' 
+    }}>
       
        <div
-          className="img tabletModelo-destino"
+          className="img tabletModelo-destino geral-cadastro"
           style={{
-            height: '28vh',
+            height: '24vh',
             width: '90vw',
             backgroundImage: 'url(destinos.png)',
             backgroundSize: 'cover', 
             backgroundPosition: 'center',
-            marginTop:'5px'
-            // border:'solid yellow 1px'
+            marginTop:'0px',
+            border:'solid yellow 1px'
           }}
         ></div>
       
-      <div className="p-6 rounded-lg shadow-md w-full max-w-[1000px] mx-auto"
-      //  style={{ border:'solid red 1px' }}
+      <div className="p-6 rounded-lg shadow-md w-full max-w-[900px] mx-auto"
+       style={{ 
+        border:'solid red 1px',
+       }}
        >
        
       
@@ -538,6 +542,7 @@ const Cadastro = () => {
 
                   <div>
                       <Select
+                      className='cadastro-input'
                         value={selectedCountry}
                         onChange={handleChange}
                         options={countries}
@@ -606,13 +611,15 @@ const Cadastro = () => {
             </div>
 
 
-            <div className="flex flex-col md:flex-row justify-between items-center "> {/* flex-col para mobile e flex-row para telas médias em diante */}
+            <div className="flex flex-col md:flex-row justify-between items-center " style={{
+              // border: 'solid red 1px'
+              }}> {/* flex-col para mobile e flex-row para telas médias em diante */}
                    {/* Condicional para o botão de cadastro */}
               {isCadastro && (
                       <button
                         type="submit"
                         
-                        className="w-[170px] h-[30px] cadastrar text-white text-xl font-bold  transition-colors rounded-[20px] flex justify-center items-center mb-2 md:mb-0 font-latam" // mb-2 para espaçamento em mobile
+                        className="w-[170px] h-[30px] cadastrar text-white text-xl font-bold  transition-colors rounded-[20px] flex justify-center items-center mb-2 md:mb-0 font-latam cadastro-btn" // mb-2 para espaçamento em mobile
                         style={{
                           boxShadow: '0px 10px 10px -5px rgba(0, 0, 0, 0.8)',
                           borderBottom: '3px solid black',
@@ -670,7 +677,7 @@ const Cadastro = () => {
             <div
               className=" tabletModelo-assinatura "
               style={{
-                height: '20vh',
+                height: '10vh',
                 width: '20vw',
                 backgroundImage: 'url(assinatura.png)',
                 backgroundSize: 'cover',
