@@ -67,7 +67,7 @@ const Agendamento = () => {
       style={{ backgroundImage: `url('/fundomenu.png')`, backgroundSize: 'cover' }}>
 
     <div
-          className="img tabletModelo-destino tabletModelo-agendar geral-cadastro"
+          className="img tabletModelo-destino tabletModelo-agendar geral-cadastro diminiu-agendamento"
           style={{
             height: '28vh',
             width: '90vw',
@@ -170,12 +170,12 @@ const Agendamento = () => {
             <div
               className=" tabletModelo-assinatura "
               style={{
-                height: '20vh',
+                height: '12vh',
                 width: '20vw',
                 backgroundImage: 'url(assinatura.png)',
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
-                marginTop:'10px'
+                
               }}
             />
           </div>

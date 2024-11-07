@@ -339,12 +339,12 @@ const Reagendamento = () => {
             <div
               className=" tabletModelo-assinatura "
               style={{
-                height: '20vh',
+                height: '12vh',
                 width: '20vw',
                 backgroundImage: 'url(assinatura.png)',
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
-                marginTop:'10px'
+               
               }}
             />
           </div>

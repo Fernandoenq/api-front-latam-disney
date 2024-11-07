@@ -682,7 +682,7 @@ const Cadastro = () => {
                 backgroundImage: 'url(assinatura.png)',
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
-                marginTop:'10px'
+                marginTop:'5px'
               }}
             />
           </div>
