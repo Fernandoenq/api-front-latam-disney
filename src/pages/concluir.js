@@ -172,7 +172,7 @@ const Agendar = () => {
     style={{ backgroundImage: `url('/fundomenu.png')`, backgroundSize: 'cover' }}>
 
 <div
-          className="img tabletModelo-destino tabletModelo-agendar"
+          className="img tabletModelo-destino tabletModelo-agendar geral-cadastro"
           style={{
             height: '28vh',
             width: '90vw',

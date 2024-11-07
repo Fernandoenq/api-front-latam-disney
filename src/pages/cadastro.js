@@ -457,7 +457,7 @@ const Cadastro = () => {
             backgroundSize: 'cover', 
             backgroundPosition: 'center',
             marginTop:'0px',
-            border:'solid yellow 1px'
+            // border:'solid yellow 1px'
           }}
         ></div>
       
