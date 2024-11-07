@@ -4,59 +4,32 @@ import BASE_URL from '../config';
 
 const Planilha = () => {
   const [dados, setDados] = useState([]);
-  const [filteredDados, setFilteredDados] = useState([]);
-  const [selectedDate, setSelectedDate] = useState('');
+  const [selectedOption, setSelectedOption] = useState(6); // Valor inicial
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // Controle de visibilidade do menu
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchDados = async (dayOnly) => {
+    const fetchDados = async () => {
       try {
-        const response = await fetch(`${BASE_URL}/Scheduling/Dashboard/${dayOnly}`);
+        const response = await fetch(`${BASE_URL}/Scheduling/Dashboard/${selectedOption}`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
   
         const textData = await response.text();
-       
+        console.log("Resposta bruta:", textData);
 
         const cleanedData = textData.replace(/NaN/g, 'null');
         const data = JSON.parse(cleanedData);
   
         setDados(data);
-        setFilteredDados(data);
       } catch (error) {
         console.error('Erro ao buscar dados:', error);
       }
     };
   
     fetchDados();
-  }, []);
-
-  const handleDateChange = (e) => {
-    const selected = e.target.value;
-    const selectedDay = selected.split('-')[2]; // Extrai apenas o dia da data
-  
-    // Armazena o dia da data em uma variável chamada `dayOnly`
-    const dayOnly = selectedDay;
-    
-    setSelectedDate(selected);
-  
-    // Filtra os dados com base no dia do agendamento, se SchedulingDate não for nulo ou undefined
-    const filtered = dados.filter((item) => {
-      if (item.SchedulingDate) {
-        const itemDay = item.SchedulingDate.split('-')[2]; // Extrai o dia da data do item
-        return itemDay === dayOnly;
-      }
-      return false; // Exclui itens sem uma data válida
-    });
-  
-    setFilteredDados(filtered);
-  
-    console.log("Dia selecionado:", dayOnly); // Exibe o dia selecionado no console
-  };
-  
-  
-  
+  }, [selectedOption]);
 
   const getStatusLabel = (status) => {
     switch (status) {
@@ -76,19 +49,59 @@ const Planilha = () => {
     return cpf.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})$/, "$1.$2.$3-$4");
   };
 
+  const formatData = (SchedulingDate) => {
+    if (!SchedulingDate) return '-';
+    return SchedulingDate.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})$/, "$1.$2.$3-$4");
+  };
+
   return (
     <div
-      className="flex flex-col min-h-screen items-center justify-center" 
+      className="flex flex-col min-h-screen items-center justify-center"
       style={{
         backgroundImage: `url('/fundomenu.png')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         paddingTop: "60px",
         paddingBottom: "100px",
-        position: "relative",
-        // border:' red 1px solid'
+        position: "relative"
       }}
     >
+      {/* Botão de seleção de data */}
+      <div className="mb-8">
+        <button
+          className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded focus:outline-none font-latam"
+          onClick={() => setIsMenuOpen(!isMenuOpen)} // Alterna a visibilidade do menu
+        >
+          Selecione a data
+        </button>
+
+        {isMenuOpen && ( // Mostra o menu apenas se isMenuOpen for true
+          <div className="relative">
+            <div className="absolute z-10 bg-white shadow-md rounded mt-2 font-latam">
+              <button
+                onClick={() => { setSelectedOption(6); setIsMenuOpen(false); }}
+                className={`w-full px-4 py-2 hover:bg-gray-200 ${selectedOption === 6 ? "bg-blue-100" : ""}`}
+              >
+                06/11/2024
+              </button>
+              <button
+                onClick={() => { setSelectedOption(9); setIsMenuOpen(false); }}
+                className={`w-full px-4 py-2 hover:bg-gray-200 ${selectedOption === 9 ? "bg-blue-100" : ""}`}
+              >
+                09/11/2024
+              </button>
+              <button
+                onClick={() => { setSelectedOption(10); setIsMenuOpen(false); }}
+                className={`w-full px-4 py-2 hover:bg-gray-200 ${selectedOption === 10 ? "bg-blue-100" : ""}`}
+              >
+                10/11/2024
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Botão de retorno */}
       <button
         onClick={() => navigate("/dashboard")}
         className="absolute top-4 left-4 bg-blue-600 hover:bg-blue-700 text-white rounded-full p-2"
@@ -99,21 +112,9 @@ const Planilha = () => {
         </svg>
       </button>
 
-      {/* Campo de input para selecionar a data */}
-      <div className="mb-4 w-full flex justify-center">
-        <input
-          type="date"
-          value={selectedDate}
-          onChange={handleDateChange}
-          className="p-2 border border-gray-300 rounded-lg shadow-sm text-gray-700"
-        />
-      </div>
-
       <div
-        className="overflow-x-auto rounded-lg shadow-md my-8 mx-auto max-w-7xl"
-        style={{ width: '90%', backgroundColor: '#ebf8ff', 
-          // border:' red 1px solid' 
-        }}
+        className="overflow-x-auto rounded-lg shadow-md my-8 mx-auto"
+        style={{ maxWidth: '90%', backgroundColor: '#ebf8ff' }}
       >
         <table className="w-full border border-gray-300">
           <thead style={{ backgroundColor: '#1e3a8a' }}>
@@ -127,11 +128,11 @@ const Planilha = () => {
             </tr>
           </thead>
           <tbody className="text-gray-700 text-sm font-light">
-            {filteredDados.map((item, index) => (
+            {dados.map((item, index) => (
               <tr key={index} className="border-b border-gray-300 hover:bg-blue-200">
                 <td className="py-3 px-6 text-left whitespace-nowrap">{item.TurnTime}</td>
                 <td className="py-3 px-6 text-left">{item.ChairName}</td>
-                <td className="py-3 px-6 text-left">{item.PersonName || '-'}</td>
+                <td className="py-3 px-6 text-left">{item.PersonName}</td>
                 <td className="py-3 px-6 text-left">{formatCPF(item.Cpf)}</td>
                 <td className="py-3 px-6 text-center">
                   <span
@@ -146,7 +147,7 @@ const Planilha = () => {
                     {getStatusLabel(item.SchedulingStatus)}
                   </span>
                 </td>
-                <td className="py-3 px-6 text-center">{item.SchedulingDate || '-'}</td>
+                <td className="py-3 px-6 text-center">{formatData(item.SchedulingDate)}</td>
               </tr>
             ))}
           </tbody>
