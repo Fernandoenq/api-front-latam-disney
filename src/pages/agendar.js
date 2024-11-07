@@ -163,11 +163,12 @@ const Agendar = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen items-center justify-center celular-agendar body-cad" style={{ backgroundImage: `url('/fundomenu.png')`, backgroundSize: 'cover' }}>
+    <div className="flex flex-col min-h-screen items-center  celular-agendar body-cad" style={{ backgroundImage: `url('/fundomenu.png')`, backgroundSize: 'cover' ,
+     }}>
   
   
   <div
-          className="img tabletModelo-destino tabletModelo-agendar geral-cadastro"
+          className="img tabletModelo-destino tabletModelo-agendar "
           style={{
             height: '28vh',
             width: '90vw',

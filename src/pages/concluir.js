@@ -168,7 +168,7 @@ const Agendar = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen items-center justify-center celular-agendar body-cad"
+    <div className="flex flex-col min-h-screen items-center  celular-agendar body-cad"
     style={{ backgroundImage: `url('/fundomenu.png')`, backgroundSize: 'cover' }}>
 
 <div

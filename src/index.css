@@ -141,6 +141,12 @@ code {
     height: 28vh !important;
     width: 150vh !important;
   }
+  .tabletModelo-agendar{
+    margin-top: 30px !important;
+    margin-bottom: 10px !important;
+    height: 17vh !important;
+    /* border: solid red 1px; */
+  }
 }
 
 /* tablet modelo */
@@ -157,7 +163,7 @@ code {
     width: 30vh !important;
   }
   .tabletModelo-assinatura{
-    margin-top:10px !important;
+    margin-top:1px !important;
     height: 8vh !important;
     width: 30vh !important;
     /* border:solid 1px red; */
@@ -172,18 +178,19 @@ code {
     box-sizing: border-box;
   }
   .tabletModelo-destino{
-    margin-top: 20px !important;
+    margin-top: 10px !important;
     height: 17vh !important;
     
   }
   
   .geral-cadastro{
-    margin-top: 40px !important;
+    margin-top: 20px !important;
   }
   .tabletModelo-agendar{
-    margin-top: 0px !important;
+    margin-top: 30px !important;
     margin-bottom: 10px !important;
     height: 17vh !important;
+    /* border: solid red 1px; */
   }
 
 

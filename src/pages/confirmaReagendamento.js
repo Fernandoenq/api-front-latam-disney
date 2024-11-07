@@ -17,6 +17,8 @@ const Reagendamento = () => {
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [oldSchedulingId, setOldSchedulingId] = useState(null);
   const navigate = useNavigate();
+  const [message, setMessage] = useState(''); // Estado para a mensagem de erro ou sucesso
+  const [isSuccess, setIsSuccess] = useState(false); // Para saber se foi sucesso ou erro
 
   useEffect(() => {
     const storedUserId = localStorage.getItem('userId');
@@ -43,6 +45,8 @@ const Reagendamento = () => {
   
     if (storedIDbyCPF) {
       setPersonId(storedIDbyCPF);
+    } else {
+      // alert("Não foi possível recuperar o ID pelo CPF.");
     }
   }, [navigate]);
   
@@ -136,14 +140,18 @@ const Reagendamento = () => {
     
     
     try {
+      console.log(schedulingId);
+      console.log(selectedSchedulingId);
+      
       const response = await fetch(`${BASE_URL}/Scheduling/Rescheduling`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          NewSchedulingId: selectedSchedulingId, 
-          OldSchedulingId: schedulingId,  // Utilize o ID que já estava agendado , 
+          NewSchedulingId: Number(selectedSchedulingId), 
+          OldSchedulingId: Number(schedulingId),  // Utilize o ID que já estava agendado ,
+          PersonId: Number(personId)
         }),
       });
 
@@ -155,7 +163,17 @@ const Reagendamento = () => {
           setShowConfirmationModal(false);
           navigate('/agendamento');
         }, 1000);
-      } else {
+      } else if (response.status === 422) {
+        // Erro de validação (422 Unprocessable Entity) vindo do backend
+        const data = await response.json(); // Captura a resposta do corpo
+        setIsSuccess(false);
+        const errors = data.Errors ? data.Errors.join(', ') : 'Erro desconhecido';
+        setMessage(`${errors}`);
+        closeModal(); // Fecha a modal de confirmação ao encontrar um erro
+       
+      } 
+      
+      else {
         // alert('Erro ao reservar a cadeira. Tente novamente.');
       }
     } catch (error) {
@@ -190,7 +208,7 @@ const Reagendamento = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen items-center justify-center celular-agendar body-cad" style={{ backgroundImage: `url('/fundomenu.png')`, backgroundSize: 'cover' }}>
+    <div className="flex flex-col min-h-screen items-center  celular-agendar body-cad" style={{ backgroundImage: `url('/fundomenu.png')`, backgroundSize: 'cover' }}>
      <div
           className="img tabletModelo-destino tabletModelo-agendar geral-cadastro"
           style={{
@@ -309,6 +327,12 @@ const Reagendamento = () => {
 
     
   </div>
+    {/* Exibição de mensagem de erro ou sucesso */}
+{message && (
+          <div className={`mt-4 text-center ${isSuccess ? 'text-green-500' : 'text-red-500'}`}>
+            {message}
+          </div>
+        )}
 
    {/* Imagem colocada abaixo dos inputs e botões */}
    <div className="flex justify-center items-center"> {/* Container flex para centralizar */}
