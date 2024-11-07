@@ -463,7 +463,7 @@ const Cadastro = () => {
       
       <div className="p-6 rounded-lg shadow-md w-full max-w-[900px] mx-auto"
        style={{ 
-        border:'solid red 1px',
+        // border:'solid red 1px',
        }}
        >
        

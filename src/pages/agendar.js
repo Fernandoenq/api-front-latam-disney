@@ -175,7 +175,7 @@ const Agendar = () => {
             backgroundSize: 'cover', 
             backgroundPosition: 'center',
             marginTop:'10px',
-            border:'solid yellow 1px'
+            // border:'solid yellow 1px'
           }}
         ></div>
 
