@@ -85,6 +85,12 @@ const Planilha = () => {
                 06/11/2024
               </button>
               <button
+                onClick={() => { setSelectedOption(7); setIsMenuOpen(false); }}
+                className={`w-full px-4 py-2 hover:bg-gray-200 ${selectedOption === 7 ? "bg-blue-100" : ""}`}
+              >
+                07/11/2024
+              </button>
+              <button
                 onClick={() => { setSelectedOption(9); setIsMenuOpen(false); }}
                 className={`w-full px-4 py-2 hover:bg-gray-200 ${selectedOption === 9 ? "bg-blue-100" : ""}`}
               >
