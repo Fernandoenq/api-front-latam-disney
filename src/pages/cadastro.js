@@ -345,10 +345,10 @@ const Cadastro = () => {
   const cleanedPhone = celular.replace(/\D/g, ''); // Remove tudo que não é dígito
 
     // Validar se o CPF é válido
-    if (!isValidCpf(cpf)) {
-      setMessage("CPF inválido! Verifique o número e tente novamente.");
-      return;
-    }
+    // if (!isValidCpf(cpf)) {
+    //   setMessage("CPF inválido! Verifique o número e tente novamente.");
+    //   return;
+    // }
     // console.log("esse e o pais",selectedCountry.label)
     // console.log("?",aceiteTermoLGPD)
     // console.log("?",aceiteOfertas)
@@ -358,11 +358,11 @@ const Cadastro = () => {
     // Preparar os dados do cliente para o cadastro
     const clientData = {
       RegisterDate: formattedDate,
-      PersonName: name,
-      Cpf: cpf.replace(/\D/g, ''), // Remove a formatação do CPF antes de enviar
-      Phone: cleanedPhone, // Usar o número do celular limpo
+      PersonName: name || "NE",
+      Cpf: cpf.replace(/\D/g, '') || "NE", // Remove a formatação do CPF antes de enviar
+      Phone: cleanedPhone || "NE", // Usar o número do celular limpo
       BirthDate: 1,
-      Mail: email,
+      Mail: email || "NE",
       CountryName:selectedCountry.label.toString(),
       HasAcceptedParticipation: aceiteTermoLGPD, // Use o estado do rádio
       HasAcceptedPromotion: aceiteOfertas // Use o estado do rádio
@@ -485,7 +485,7 @@ const Cadastro = () => {
                         borderBottom: '3px solid black' }}
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                      required
+                      
                     />
                   </div>
                   <div>
@@ -498,7 +498,7 @@ const Cadastro = () => {
                         borderBottom: '3px solid black'}}
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      required
+                      
                     />
                   </div>
                   
@@ -515,7 +515,7 @@ const Cadastro = () => {
                         setCpf(e.target.value);
                         handleCpfChange(e);
                       }}
-                      required
+                      
                     />
                   </div>
                   <div>
@@ -532,7 +532,7 @@ const Cadastro = () => {
                               value={celular}
                               onChange={handlePhoneChange}
                               onBlur={handleBlur} // Validação ao sair do campo
-                              required
+                              
                             />
                             {error && <p className="text-white bold">{error}</p>} {/* Mensagem de erro */}
                     </div>
