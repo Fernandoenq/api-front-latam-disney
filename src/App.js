@@ -26,6 +26,7 @@ function App() {
             <Route path="/dashboard" element={<PrivateRoute element={<Dashboard />} />} />
             <Route path="/cadastro" element={<PrivateRoute element={<Cadastro />} />} />
             <Route path="/planilha" element={<PrivateRoute element={<Planilha />} />} />
+            {/* <Route path="/planilha" element={<Planilha/>} /> */}
             <Route path="/confirmacao" element={<PrivateRoute element={<Confirmacao />} />} />
             <Route path="/confirmacpf" element={<PrivateRoute element={<CPF />} />} />
             <Route path="/agendamento" element={<PrivateRoute element={<Agendamento />} />} />

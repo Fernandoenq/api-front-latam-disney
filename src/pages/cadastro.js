@@ -522,7 +522,7 @@ const Cadastro = () => {
                       <InputMask
                               mask={selectedCountry.value === 'BR' ? '(99) 99999-9999' : ''}
                               placeholder="Celular/WhatsApp"
-                              className={`w-full shadow-x8 pl-12 pr-4 py-2 text-white rounded-[20px] cadastro-input ${error ? 'border-red-500' : ''}`}
+                              className={`w-full shadow-x8 pl-12 pr-4 py-2 text-white rounded-[20px] cadastro-input ${error ? 'border-white bold' : ''}`}
                               style={{
                                 backgroundColor: 'rgba(65, 105, 225, 0.3)',
                                 height: '55px',
@@ -534,7 +534,7 @@ const Cadastro = () => {
                               onBlur={handleBlur} // Validação ao sair do campo
                               required
                             />
-                            {error && <p className="text-red-500">{error}</p>} {/* Mensagem de erro */}
+                            {error && <p className="text-white bold">{error}</p>} {/* Mensagem de erro */}
                     </div>
 
 
@@ -665,7 +665,7 @@ const Cadastro = () => {
 
         {/* Exibição de mensagem de erro ou sucesso */}
         {message && (
-          <div className={`mt-4 text-center ${isSuccess ? 'text-green-500' : 'text-red-500'}`}>
+          <div className={`mt-4 text-center ${isSuccess ? 'text-green-500 font-latam' : 'text-white font-latam'}`}>
             {message}
           </div>
         )}

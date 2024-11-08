@@ -329,7 +329,7 @@ const Reagendamento = () => {
   </div>
     {/* Exibição de mensagem de erro ou sucesso */}
 {message && (
-          <div className={`mt-4 text-center ${isSuccess ? 'text-green-500' : 'text-red-500'}`}>
+          <div className={`mt-4 text-center ${isSuccess ? 'text-green-500 font-latam' : 'text-white font-latam'}`}>
             {message}
           </div>
         )}

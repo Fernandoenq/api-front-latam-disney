@@ -4,7 +4,7 @@ import BASE_URL from '../config';
 
 const Planilha = () => {
   const [dados, setDados] = useState([]);
-  const [selectedOption, setSelectedOption] = useState(7); // Valor inicial
+  const [selectedOption, setSelectedOption] = useState(8); // Valor inicial
   const [isMenuOpen, setIsMenuOpen] = useState(false); // Controle de visibilidade do menu
   const navigate = useNavigate();
 
@@ -78,13 +78,6 @@ const Planilha = () => {
         {isMenuOpen && ( // Mostra o menu apenas se isMenuOpen for true
           <div className="relative">
             <div className="absolute z-10 bg-white shadow-md rounded mt-2 font-latam">
-            
-              <button
-                onClick={() => { setSelectedOption(7); setIsMenuOpen(false); }}
-                className={`w-full px-4 py-2 hover:bg-gray-200 ${selectedOption === 7 ? "bg-blue-100" : ""}`}
-              >
-                07/11/2024
-              </button>
               <button
                 onClick={() => { setSelectedOption(8); setIsMenuOpen(false); }}
                 className={`w-full px-4 py-2 hover:bg-gray-200 ${selectedOption === 8 ? "bg-blue-100" : ""}`}

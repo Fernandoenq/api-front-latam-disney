@@ -112,6 +112,8 @@ const Agendar = () => {
         fetchSchedulingData();
         closeModal();
         setTimeout(() => setShowConfirmationModal(false), 1000);
+        setIsSuccess(true);
+        setMessage("Cadastro realizado com sucesso!");
       } else if (response.status === 422) {
         // Erro de validação (422 Unprocessable Entity) vindo do backend
         const data = await response.json(); // Captura a resposta do corpo
@@ -272,7 +274,7 @@ const Agendar = () => {
   </div>
   {/* Exibição de mensagem de erro ou sucesso */}
 {message && (
-          <div className={`mt-4 text-center ${isSuccess ? 'text-green-500' : 'text-red-500'}`}>
+          <div className={`mt-4 text-center ${isSuccess ? 'text-green-500 font-latam' : 'text-white font-latam'}`}>
             {message}
           </div>
         )}
